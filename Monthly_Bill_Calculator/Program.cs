@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Monthly_Bill_Calculator.Data;
+
 namespace Monthly_Bill_Calculator
 {
     public class Program
@@ -5,11 +8,18 @@ namespace Monthly_Bill_Calculator
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            string? connectionString = builder.Configuration.GetConnectionString("Default");
+
+            // Registration of user services in DI container
+            builder.Services.AddDbContext<MBCalcAppDbContext>(opt =>
+            {
+                opt.UseSqlServer(connectionString);
+            });
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            var app = builder.Build();
+            WebApplication app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
