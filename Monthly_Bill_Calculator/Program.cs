@@ -8,7 +8,7 @@ namespace Monthly_Bill_Calculator
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            string? connectionString = builder.Configuration.GetConnectionString("Default");
+            string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
             // Registration of user services in DI container
             builder.Services.AddDbContext<MBCalcAppDbContext>(opt =>
