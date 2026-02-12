@@ -12,12 +12,12 @@ namespace Monthly_Bill_Calculator.Data
         {
         }
 
-        public DbSet<Electricity> Electricity { get; set; }
-        public DbSet<Steam> Steam { get; set; }
-        public DbSet<ColdWater> ColdWater { get; set; }
-        public DbSet<HotWater> HotWater { get; set; }
-        public DbSet<NaturalGas> NaturalGas { get; set; }
-        public DbSet<CentralHeating> CentralHeating { get; set; }
+        public DbSet<Electricity> Electricities { get; set; }
+        public DbSet<Steam> Steams { get; set; }
+        public DbSet<ColdWater> ColdWaters { get; set; }
+        public DbSet<HotWater> HotWaters { get; set; }
+        public DbSet<NaturalGas> NaturalGases { get; set; }
+        public DbSet<CentralHeating> CentralHeatings { get; set; }
         public DbSet<Month> Months { get; set; }
 
     }
