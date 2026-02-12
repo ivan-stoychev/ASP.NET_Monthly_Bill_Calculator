@@ -6,15 +6,15 @@ namespace Monthly_Bill_Calculator.DB_Models
     using static ModelValidation;
     public abstract class Utility
     {
-        //[Required]
+        [Required]
         [Range(ConsumptionMin, ConsumptionMax)]
         public double Consumption { get; set; }
 
-        //[Required]
+        [Required]
         [Range(typeof(decimal), PriceMin, PriceMax)]
         public decimal Price { get; set; }
 
-        //[Required]
+        [Required]
         public string Unit { get; protected set; }
 
         [NotMapped]
