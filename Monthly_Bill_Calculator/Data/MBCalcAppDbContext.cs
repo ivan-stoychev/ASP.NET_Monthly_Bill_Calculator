@@ -7,8 +7,8 @@ namespace Monthly_Bill_Calculator.Data
 {
     public class MBCalcAppDbContext : DbContext
     {
-        public MBCalcAppDbContext(DbContextOptions<MBCalcAppDbContext> options)
-            : base(options)
+        public MBCalcAppDbContext(DbContextOptions<MBCalcAppDbContext> dbContextOptions)
+            : base(dbContextOptions)
         {
         }
 
