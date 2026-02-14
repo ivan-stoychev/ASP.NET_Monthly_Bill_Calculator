@@ -5,9 +5,9 @@ using System.IO;
 
 namespace Monthly_Bill_Calculator.Data
 {
-    public class MBCalcAppDbContext : DbContext
+    public class CalcAppDbContext : DbContext
     {
-        public MBCalcAppDbContext(DbContextOptions<MBCalcAppDbContext> dbContextOptions)
+        public CalcAppDbContext(DbContextOptions<CalcAppDbContext> dbContextOptions)
             : base(dbContextOptions)
         {
         }

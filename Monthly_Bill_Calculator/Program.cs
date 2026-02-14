@@ -11,7 +11,7 @@ namespace Monthly_Bill_Calculator
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
             // Registration of user services in DI container
-            builder.Services.AddDbContext<MBCalcAppDbContext>(opt =>
+            builder.Services.AddDbContext<CalcAppDbContext>(opt =>
             {
                 opt.UseSqlServer(connectionString);
             });

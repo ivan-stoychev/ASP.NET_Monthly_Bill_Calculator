@@ -5,8 +5,8 @@ namespace Monthly_Bill_Calculator.Controllers
 {
     public class MonthController : Controller
     {
-        private readonly MBCalcAppDbContext dbContext;
-        public MonthController(MBCalcAppDbContext dbContext)
+        private readonly CalcAppDbContext dbContext;
+        public MonthController(CalcAppDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

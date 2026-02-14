@@ -10,7 +10,7 @@ using Monthly_Bill_Calculator.Data;
 
 namespace Monthly_Bill_Calculator.Migrations
 {
-    [DbContext(typeof(MBCalcAppDbContext))]
+    [DbContext(typeof(CalcAppDbContext))]
     partial class MBCalcAppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -11,7 +11,7 @@ using Monthly_Bill_Calculator.Data;
 
 namespace Monthly_Bill_Calculator.Migrations
 {
-    [DbContext(typeof(MBCalcAppDbContext))]
+    [DbContext(typeof(CalcAppDbContext))]
     [Migration("20260212190155_InitialDbDesign")]
     partial class InitialDbDesign
     {
