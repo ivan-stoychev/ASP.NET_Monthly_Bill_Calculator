@@ -1,0 +1,62 @@
+﻿@model Monthly_Bill_Calculator.DB_Models.Month
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Month</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MonthNumber" class="control-label"></label>
+                <input asp-for="MonthNumber" class="form-control" />
+                <span asp-validation-for="MonthNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElectricityId" class="control-label"></label>
+                <select asp-for="ElectricityId" class ="form-control" asp-items="ViewBag.ElectricityId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ColdWaterId" class="control-label"></label>
+                <select asp-for="ColdWaterId" class ="form-control" asp-items="ViewBag.ColdWaterId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="HotWaterId" class="control-label"></label>
+                <select asp-for="HotWaterId" class ="form-control" asp-items="ViewBag.HotWaterId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="NaturalGasId" class="control-label"></label>
+                <select asp-for="NaturalGasId" class ="form-control" asp-items="ViewBag.NaturalGasId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SteamId" class="control-label"></label>
+                <select asp-for="SteamId" class ="form-control" asp-items="ViewBag.SteamId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CentralHeatingId" class="control-label"></label>
+                <select asp-for="CentralHeatingId" class ="form-control" asp-items="ViewBag.CentralHeatingId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

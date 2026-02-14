@@ -1,0 +1,66 @@
+﻿@model Monthly_Bill_Calculator.DB_Models.Month
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Month</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MonthNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MonthNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Electricity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Electricity.Unit)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ColdWater)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ColdWater.Unit)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HotWater)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HotWater.Unit)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NaturalGas)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NaturalGas.Unit)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Steam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Steam.Unit)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CentralHeating)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CentralHeating.Unit)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
