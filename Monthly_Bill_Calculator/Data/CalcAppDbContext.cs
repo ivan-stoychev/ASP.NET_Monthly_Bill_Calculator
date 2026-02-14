@@ -23,16 +23,13 @@ namespace Monthly_Bill_Calculator.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // -----------------------------
-            // Seed Utility Data (only for Month 1)
-            // -----------------------------
+            // Seed Utilities for Month Entity
             modelBuilder.Entity<Electricity>().HasData(
                 new Electricity
                 {
                     Id = 1,
                     Consumption = 120,
-                    Price = 0.20m,
-                    Unit = "kW/h"
+                    Price = 0.20m
                 }
             );
 
@@ -41,8 +38,7 @@ namespace Monthly_Bill_Calculator.Data
                 {
                     Id = 1,
                     Consumption = 5,
-                    Price = 2.50m,
-                    Unit = "m3"
+                    Price = 2.50m
                 }
             );
 
@@ -51,8 +47,7 @@ namespace Monthly_Bill_Calculator.Data
                 {
                     Id = 1,
                     Consumption = 3,
-                    Price = 4.00m,
-                    Unit = "m3"
+                    Price = 4.00m
                 }
             );
 
@@ -61,8 +56,7 @@ namespace Monthly_Bill_Calculator.Data
                 {
                     Id = 1,
                     Consumption = 50,
-                    Price = 1.20m,
-                    Unit = "m3"
+                    Price = 1.20m
                 }
             );
 
@@ -71,8 +65,7 @@ namespace Monthly_Bill_Calculator.Data
                 {
                     Id = 1,
                     Consumption = 10,
-                    Price = 3.00m,
-                    Unit = "kg"
+                    Price = 3.00m
                 }
             );
 
@@ -81,20 +74,17 @@ namespace Monthly_Bill_Calculator.Data
                 {
                     Id = 1,
                     Consumption = 100,
-                    Price = 0.15m,
-                    Unit = "kWh"
+                    Price = 0.15m
                 }
             );
 
-            // -----------------------------
             // Seed Months
-            // -----------------------------
             modelBuilder.Entity<Month>().HasData(
                 new Month
                 {
                     Id = 1,
-                    Year = 2024,
-                    MonthNumber = 1,
+                    Year = 2025,
+                    MonthNumber = 11,
                     ElectricityId = 1,
                     ColdWaterId = 1,
                     HotWaterId = 1,
@@ -105,8 +95,8 @@ namespace Monthly_Bill_Calculator.Data
                 new Month
                 {
                     Id = 2,
-                    Year = 2024,
-                    MonthNumber = 2,
+                    Year = 2025,
+                    MonthNumber = 12,
                     ElectricityId = null,
                     ColdWaterId = null,
                     HotWaterId = null,
@@ -117,8 +107,8 @@ namespace Monthly_Bill_Calculator.Data
                 new Month
                 {
                     Id = 3,
-                    Year = 2024,
-                    MonthNumber = 3,
+                    Year = 2026,
+                    MonthNumber = 1,
                     ElectricityId = null,
                     ColdWaterId = null,
                     HotWaterId = null,
