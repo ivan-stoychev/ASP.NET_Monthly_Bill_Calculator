@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Monthly_Bill_Calculator.Data;
 
 namespace Monthly_Bill_Calculator.Controllers
 {
     public class MonthController : Controller
     {
-        public IActionResult Index()
+        private readonly MBCalcAppDbContext dbContext;
+        public MonthController(MBCalcAppDbContext dbContext)
         {
-            return this.Ok("I am at Month Controller");
+            this.dbContext = dbContext;
         }
+
+
+        //public IActionResult Index()
+        //{
+        //    return this.Ok("I am at Month Controller");
+        //}
     }
 }
