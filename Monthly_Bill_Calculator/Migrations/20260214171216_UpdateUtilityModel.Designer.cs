@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Monthly_Bill_Calculator.Data;
 
@@ -11,9 +12,11 @@ using Monthly_Bill_Calculator.Data;
 namespace Monthly_Bill_Calculator.Migrations
 {
     [DbContext(typeof(CalcAppDbContext))]
-    partial class MBCalcAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260214171216_UpdateUtilityModel")]
+    partial class UpdateUtilityModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
