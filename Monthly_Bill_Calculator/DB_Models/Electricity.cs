@@ -7,9 +7,6 @@ namespace Monthly_Bill_Calculator.DB_Models
     {
         [Key]
         public int Id { get; set; }
-        public Electricity()
-        {
-            Unit = "kW/h";
-        }
+        public string Unit => "kW/h";
     }
 }

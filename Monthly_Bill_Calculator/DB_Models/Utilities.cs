@@ -14,9 +14,6 @@ namespace Monthly_Bill_Calculator.DB_Models
         [Range(typeof(decimal), PriceMin, PriceMax)]
         public decimal Price { get; set; }
 
-        [Required]
-        public string Unit { get; protected set; }
-
         [NotMapped]
         public decimal MonthlyCost => Price * (decimal)Consumption;
     }

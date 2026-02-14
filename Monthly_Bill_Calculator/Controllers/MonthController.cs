@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Monthly_Bill_Calculator.Data;
+using Monthly_Bill_Calculator.DB_Models;
 
 namespace Monthly_Bill_Calculator.Controllers
 {
@@ -12,9 +14,9 @@ namespace Monthly_Bill_Calculator.Controllers
         }
 
 
-        //public IActionResult Index()
-        //{
-        //    return this.Ok("I am at Month Controller");
-        //}
+        public IActionResult Index()
+        {
+            return this.Ok("This is Month Controller");
+        }
     }
 }
