@@ -7,12 +7,12 @@ namespace Monthly_Bill_Calculator.DB_Models
     public abstract class Utility
     {
         [Range(ConsumptionMin, ConsumptionMax, ErrorMessage = "Consumption must be in the range of 0.0001 - 99999999")]
-        public double Consumption { get; set; }
+        public double? Consumption { get; set; }
 
         [Range(typeof(decimal), PriceMin, PriceMax, ErrorMessage = "price per unit must be in the range of 0.0001 - 99999")]
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
 
         [NotMapped]
-        public decimal MonthlyCost => Price * (decimal)Consumption;
+        public decimal MonthlyCost => (Price ?? 0) * (decimal)(Consumption ?? 0);
     }
 }
