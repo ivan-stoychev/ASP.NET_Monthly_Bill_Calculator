@@ -10,11 +10,11 @@ namespace Monthly_Bill_Calculator.DB_Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Entering a Year is required.")]
+        [Required(ErrorMessage = "Entering a year is required.")]
         [Range(MinYear, MaxYear, ErrorMessage = "Year must be between 1900 and 2100.")]
         public int Year { get; set; }
 
-        [Required(ErrorMessage = "Entering a Month is required.")]
+        [Required(ErrorMessage = "Entering a month is required.")]
         [Range(MinMonth, MaxMonth, ErrorMessage = "Month number must be between 1 and 12.")]
         public int MonthNumber { get; set; }
 
