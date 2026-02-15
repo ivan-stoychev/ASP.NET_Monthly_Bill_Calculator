@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Monthly_Bill_Calculator.DB_Models.Month>
+
+@{
+    ViewData["Title"] = "Months Overview";
+}
+
+<h2 class="mb-4">Monthly Bills Overview</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Electricity</th>
+            <th>Cold Water</th>
+            <th>Hot Water</th>
+            <th>Natural Gas</th>
+            <th>Steam</th>
+            <th>Central Heating</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var m in Model)
+        {
+            decimal electricity = m.Electricity?.MonthlyCost ?? 0;
+            decimal coldWater = m.ColdWater?.MonthlyCost ?? 0;
+            decimal hotWater = m.HotWater?.MonthlyCost ?? 0;
+            decimal naturalGas = m.NaturalGas?.MonthlyCost ?? 0;
+            decimal steam = m.Steam?.MonthlyCost ?? 0;
+            decimal heating = m.CentralHeating?.MonthlyCost ?? 0;
+
+            decimal total = electricity + coldWater + hotWater + naturalGas + steam + heating;
+
+            <tr>
+                <td>@m.Year</td>
+                <td>@m.MonthNumber</td>
+
+                <td>@electricity.ToString("0.00")</td>
+                <td>@coldWater.ToString("0.00")</td>
+                <td>@hotWater.ToString("0.00")</td>
+                <td>@naturalGas.ToString("0.00")</td>
+                <td>@steam.ToString("0.00")</td>
+                <td>@heating.ToString("0.00")</td>
+
+                <td class="fw-bold">@total.ToString("0.00")</td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@m.Id" class="btn btn-sm btn-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@m.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@m.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Add New Month</a>
