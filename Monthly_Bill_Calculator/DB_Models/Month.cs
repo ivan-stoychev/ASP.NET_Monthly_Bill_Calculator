@@ -1,18 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Monthly_Bill_Calculator.Common;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Monthly_Bill_Calculator.DB_Models
 {
+    using static ModelValidation;
     public class Month
     {
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Entering a Year is required.")]
+        [Range(MinYear, MaxYear, ErrorMessage = "Year must be between 1900 and 2100.")]
         public int Year { get; set; }
 
-        [Required]
-        [Range(1, 12)]
+        [Required(ErrorMessage = "Entering a Month is required.")]
+        [Range(MinMonth, MaxMonth, ErrorMessage = "Month number must be between 1 and 12.")]
         public int MonthNumber { get; set; }
 
         // Foreign keys
@@ -41,5 +44,4 @@ namespace Monthly_Bill_Calculator.DB_Models
             (Steam?.MonthlyCost ?? 0) +
             (CentralHeating?.MonthlyCost ?? 0);
     }
-
 }

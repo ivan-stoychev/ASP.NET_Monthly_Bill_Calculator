@@ -9,5 +9,15 @@
         // Consumption range
         public const double ConsumptionMin = 0.0001;
         public const double ConsumptionMax = 99999999;
+
+        // Year range
+        public const int MinYear = 1900;
+        public const int MaxYear = 2100;
+
+
+        // Month range
+        public const int MinMonth = 1;
+        public const int MaxMonth = 12;
+
     }
 }
