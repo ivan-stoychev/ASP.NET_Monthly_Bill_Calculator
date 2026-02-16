@@ -1,0 +1,22 @@
+﻿@model Monthly_Bill_Calculator.DB_Models.Month
+
+@{
+    ViewData["Title"] = "Delete Month";
+}
+
+<h2 class="mb-4 text-danger">Delete Month</h2>
+
+<h4>Are you sure you want to delete this month?</h4>
+
+<div class="mb-3">
+    <strong>Year:</strong> @Model.Year
+</div>
+<div class="mb-3">
+    <strong>Month:</strong> @Model.MonthNumber
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+</form>
