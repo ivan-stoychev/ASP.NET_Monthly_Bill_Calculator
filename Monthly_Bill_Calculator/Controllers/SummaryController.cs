@@ -7,20 +7,18 @@ namespace Monthly_Bill_Calculator.Controllers
 {
     public class SummaryController : Controller
     {
-        private readonly CalcAppDbContext db;
+        private readonly CalcAppDbContext dbContext;
 
-        public SummaryController(CalcAppDbContext db)
+        public SummaryController(CalcAppDbContext CalcApp)
         {
-            this.db = db;
+            this.dbContext = CalcApp;
         }
 
-        // GET
         public IActionResult Index()
         {
             return View(new SummaryViewModel());
         }
 
-        // POST
         [HttpPost]
         public IActionResult Index(SummaryViewModel model)
         {
@@ -36,7 +34,7 @@ namespace Monthly_Bill_Calculator.Controllers
                 return View(model);
             }
 
-            var months = db.Months
+            var months = dbContext.Months
                 .Include(m => m.Electricity)
                 .Include(m => m.ColdWater)
                 .Include(m => m.HotWater)
@@ -103,6 +101,8 @@ namespace Monthly_Bill_Calculator.Controllers
                     TotalPrice = months.Sum(m => m.CentralHeating?.Price ?? 0)
                 }
             };
+
+            model.TotalSpent = model.Utilities.Sum(u => u.Value.TotalPrice);
 
             return View(model);
         }
