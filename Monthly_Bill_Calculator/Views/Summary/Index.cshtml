@@ -1,0 +1,108 @@
+﻿@model Monthly_Bill_Calculator.Models.SummaryViewModel
+
+@{
+    ViewData["Title"] = "Summary";
+}
+
+<h2 class="mb-4">Summary Report</h2>
+
+<form method="post" class="mb-4">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="row">
+
+        <!-- Start Month -->
+        <div class="col-md-3">
+            <label asp-for="StartMonth" class="form-label"></label>
+            <input asp-for="StartMonth" type="number" min="1" max="12" class="form-control" />
+            <span asp-validation-for="StartMonth" class="text-danger"></span>
+        </div>
+
+        <!-- Start Year -->
+        <div class="col-md-3">
+            <label asp-for="StartYear" class="form-label"></label>
+            <input asp-for="StartYear" type="number" min="@Monthly_Bill_Calculator.Common.ModelValidation.MinYear"
+                   max="@Monthly_Bill_Calculator.Common.ModelValidation.MaxYear"
+                   class="form-control" />
+            <span asp-validation-for="StartYear" class="text-danger"></span>
+        </div>
+
+        <!-- End Month -->
+        <div class="col-md-3">
+            <label asp-for="EndMonth" class="form-label"></label>
+            <input asp-for="EndMonth" type="number" min="1" max="12" class="form-control" />
+            <span asp-validation-for="EndMonth" class="text-danger"></span>
+        </div>
+
+        <!-- End Year -->
+        <div class="col-md-3">
+            <label asp-for="EndYear" class="form-label"></label>
+            <input asp-for="EndYear" type="number" min="@Monthly_Bill_Calculator.Common.ModelValidation.MinYear"
+                   max="@Monthly_Bill_Calculator.Common.ModelValidation.MaxYear"
+                   class="form-control" />
+            <span asp-validation-for="EndYear" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <button class="btn btn-primary mt-3">Generate Summary</button>
+</form>
+
+@if (Model.Utilities != null)
+{
+    <!-- AVERAGE TABLE -->
+    <h3 class="mt-4">Average Values</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Utility</th>
+                <th>Avg Consumption</th>
+                <th>Avg Price</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.Utilities)
+            {
+                <tr>
+                    <td>@item.Key</td>
+                    <td>@item.Value.AvgConsumption</td>
+                    <td>@item.Value.AvgPrice</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- TOTAL TABLE -->
+    <h3 class="mt-4">Total Values</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Utility</th>
+                <th>Total Consumption</th>
+                <th>Spent</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.Utilities)
+            {
+                <tr>
+                    <td>@item.Key</td>
+                    <td>@item.Value.TotalConsumption</td>
+                    <td>@item.Value.TotalPrice</td>
+                </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            <tr class="table-secondary fw-bold">
+                <td colspan="2" class="text-end">Total spent on bills:</td>
+                <td>@Model.TotalSpent</td>
+            </tr>
+        </tfoot>
+    </table>
+}
