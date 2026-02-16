@@ -1,0 +1,126 @@
+﻿@model Monthly_Bill_Calculator.DB_Models.Month
+
+@{
+    ViewData["Title"] = "Create Month";
+}
+
+<h2 class="mb-4">Create New Month</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <!-- Year -->
+    <div class="mb-3">
+        <label asp-for="Year" class="form-label"></label>
+        <input asp-for="Year" class="form-control" />
+        <span asp-validation-for="Year" class="text-danger"></span>
+    </div>
+
+    <!-- Month Number -->
+    <div class="mb-4">
+        <label asp-for="MonthNumber" class="form-label"></label>
+        <input asp-for="MonthNumber" class="form-control" />
+        <span asp-validation-for="MonthNumber" class="text-danger"></span>
+    </div>
+
+    <hr />
+    <h4 class="mt-4">Utilities (optional)</h4>
+    <p class="text-muted">Fill in only the utilities you want to include.</p>
+
+    <!-- Electricity -->
+    <div class="border rounded p-3 mb-3">
+        <h5>Electricity</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Consumption (kWh)</label>
+                <input name="Electricity.Consumption" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Price per unit</label>
+                <input name="Electricity.Price" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Cold Water -->
+    <div class="border rounded p-3 mb-3">
+        <h5>Cold Water</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Consumption (m³)</label>
+                <input name="ColdWater.Consumption" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Price per unit</label>
+                <input name="ColdWater.Price" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Hot Water -->
+    <div class="border rounded p-3 mb-3">
+        <h5>Hot Water</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Consumption (m³)</label>
+                <input name="HotWater.Consumption" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Price per unit</label>
+                <input name="HotWater.Price" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Natural Gas -->
+    <div class="border rounded p-3 mb-3">
+        <h5>Natural Gas</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Consumption (m³)</label>
+                <input name="NaturalGas.Consumption" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Price per unit</label>
+                <input name="NaturalGas.Price" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Steam -->
+    <div class="border rounded p-3 mb-3">
+        <h5>Steam</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Consumption</label>
+                <input name="Steam.Consumption" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Price per unit</label>
+                <input name="Steam.Price" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Central Heating -->
+    <div class="border rounded p-3 mb-4">
+        <h5>Central Heating</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Consumption</label>
+                <input name="CentralHeating.Consumption" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Price per unit</label>
+                <input name="CentralHeating.Price" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
