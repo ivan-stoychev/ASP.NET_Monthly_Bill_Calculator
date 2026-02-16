@@ -102,6 +102,8 @@ namespace Monthly_Bill_Calculator.Controllers
                 }
             };
 
+            model.TotalAverageSpent = model.Utilities.Sum(u => u.Value.AvgPrice);
+
             model.TotalSpent = model.Utilities.Sum(u => u.Value.TotalPrice);
 
             return View(model);

@@ -37,5 +37,7 @@ namespace Monthly_Bill_Calculator.Models
         // Total amount spent across all utilities for the specified period.
         public decimal TotalSpent { get; set; }
 
+        public decimal TotalAverageSpent { get; set; }
+
     }
 }

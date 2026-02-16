@@ -15,7 +15,7 @@
         <!-- Start Month -->
         <div class="col-md-3">
             <label asp-for="StartMonth" class="form-label"></label>
-            <input asp-for="StartMonth" type="number" min="1" max="12" class="form-control" value=""/>
+            <input asp-for="StartMonth" type="number" min="1" max="12" class="form-control" value="" />
             <span asp-validation-for="StartMonth" class="text-danger"></span>
         </div>
 
@@ -24,14 +24,14 @@
             <label asp-for="StartYear" class="form-label"></label>
             <input asp-for="StartYear" type="number" min="@Monthly_Bill_Calculator.Common.ModelValidation.MinYear"
                    max="@Monthly_Bill_Calculator.Common.ModelValidation.MaxYear"
-                   class="form-control" value=""/>
+                   class="form-control" value="" />
             <span asp-validation-for="StartYear" class="text-danger"></span>
         </div>
 
         <!-- End Month -->
         <div class="col-md-3">
             <label asp-for="EndMonth" class="form-label"></label>
-            <input asp-for="EndMonth" type="number" min="1" max="12" class="form-control" value=""/>
+            <input asp-for="EndMonth" type="number" min="1" max="12" class="form-control" value="" />
             <span asp-validation-for="EndMonth" class="text-danger"></span>
         </div>
 
@@ -40,7 +40,7 @@
             <label asp-for="EndYear" class="form-label"></label>
             <input asp-for="EndYear" type="number" min="@Monthly_Bill_Calculator.Common.ModelValidation.MinYear"
                    max="@Monthly_Bill_Calculator.Common.ModelValidation.MaxYear"
-                   class="form-control" value=""/>
+                   class="form-control" value="" />
             <span asp-validation-for="EndYear" class="text-danger"></span>
         </div>
 
@@ -73,6 +73,14 @@
                 </tr>
             }
         </tbody>
+
+        <!-- NEW FOOTER ROW -->
+        <tfoot>
+            <tr class="table-secondary fw-bold">
+                <td colspan="2" class="text-end">Average spent per month:</td>
+                <td>@Model.TotalAverageSpent</td>
+            </tr>
+        </tfoot>
     </table>
 
     <!-- TOTAL TABLE -->
