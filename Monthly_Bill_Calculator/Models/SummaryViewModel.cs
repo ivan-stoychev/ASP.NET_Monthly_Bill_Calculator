@@ -33,5 +33,9 @@ namespace Monthly_Bill_Calculator.Models
 
         // Stores the average consumption and price for each utility type, as well as the total consumption and price for the specified period.
         public Dictionary<string, UtilitySummary>? Utilities { get; set; }
+
+        // Total amount spent across all utilities for the specified period.
+        public decimal TotalSpent { get; set; }
+
     }
 }
