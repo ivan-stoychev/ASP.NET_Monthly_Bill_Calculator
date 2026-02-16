@@ -24,6 +24,8 @@ namespace Monthly_Bill_Calculator.Controllers
                 .Include(m => m.NaturalGas)
                 .Include(m => m.Steam)
                 .Include(m => m.CentralHeating)
+                .OrderBy(m => m.Year)
+                .ThenBy(m => m.MonthNumber)
                 .AsNoTracking()
                 .ToArray();
 
