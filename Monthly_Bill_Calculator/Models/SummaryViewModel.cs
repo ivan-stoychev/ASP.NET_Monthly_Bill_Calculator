@@ -6,10 +6,10 @@ namespace Monthly_Bill_Calculator.Models
     using static ModelValidation;
     public class UtilitySummary
     {
-        public double? AvgConsumption { get; set; }
+        public double AvgConsumption { get; set; }
         public decimal AvgPrice { get; set; }
 
-        public double? TotalConsumption { get; set; }
+        public double TotalConsumption { get; set; }
         public decimal TotalPrice { get; set; }
     }
 
