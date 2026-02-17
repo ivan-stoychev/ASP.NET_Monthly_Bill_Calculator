@@ -14,16 +14,23 @@ namespace Monthly_Bill_Calculator.Controllers
             this.dbContext = CalcApp;
         }
 
-        public IActionResult Index()
+        // GET - Average Usage Page
+        public IActionResult AverageUsage()
         {
-            return View(new SummaryViewModel());
+            return View("AverageUsage", new SummaryViewModel());
         }
 
-        [HttpPost]
-        public IActionResult Index(SummaryViewModel model)
+        // GET - Total Usage Page
+        public IActionResult TotalUsage()
+        {
+            return View("TotalUsage", new SummaryViewModel());
+        }
+
+        // POST - Calculate Summary (used by both Average and Total usage)
+        private bool CalculateSummary(SummaryViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
+                return false;
 
             int start = model.StartYear * 100 + model.StartMonth;
             int end = model.EndYear * 100 + model.EndMonth;
@@ -31,7 +38,7 @@ namespace Monthly_Bill_Calculator.Controllers
             if (start > end)
             {
                 ModelState.AddModelError("", "Start date cannot be after end date.");
-                return View(model);
+                return false;
             }
 
             var months = dbContext.Months
@@ -48,7 +55,7 @@ namespace Monthly_Bill_Calculator.Controllers
             if (!months.Any())
             {
                 ModelState.AddModelError("", "No data found in this date range.");
-                return View(model);
+                return false;
             }
 
             model.Utilities = new Dictionary<string, UtilitySummary>
@@ -103,10 +110,29 @@ namespace Monthly_Bill_Calculator.Controllers
             };
 
             model.TotalAverageSpent = model.Utilities.Sum(u => u.Value.AvgPrice);
-
             model.TotalSpent = model.Utilities.Sum(u => u.Value.TotalPrice);
 
-            return View(model);
+            return true;
+        }
+
+        // POST - Average Usage
+        [HttpPost]
+        public IActionResult AverageUsage(SummaryViewModel model)
+        {
+            if (!CalculateSummary(model))
+                return View("AverageUsage", model);
+
+            return View("AverageUsage", model);
+        }
+
+        // POST - Total Usage
+        [HttpPost]
+        public IActionResult TotalUsage(SummaryViewModel model)
+        {
+            if (!CalculateSummary(model))
+                return View("TotalUsage", model);
+
+            return View("TotalUsage", model);
         }
     }
 }
