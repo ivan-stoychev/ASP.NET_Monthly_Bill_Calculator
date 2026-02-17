@@ -1,0 +1,43 @@
+﻿@model Monthly_Bill_Calculator.Models.SummaryViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+<div class="row">
+
+    <!-- Start Month -->
+    <div class="col-md-3">
+        <label asp-for="StartMonth" class="form-label"></label>
+        <input asp-for="StartMonth" type="number" min="1" max="12" class="form-control" value="" />
+        <span asp-validation-for="StartMonth" class="text-danger"></span>
+    </div>
+
+    <!-- Start Year -->
+    <div class="col-md-3">
+        <label asp-for="StartYear" class="form-label"></label>
+        <input asp-for="StartYear" type="number"
+               min="@Monthly_Bill_Calculator.Common.ModelValidation.MinYear"
+               max="@Monthly_Bill_Calculator.Common.ModelValidation.MaxYear"
+               class="form-control" value="" />
+        <span asp-validation-for="StartYear" class="text-danger"></span>
+    </div>
+
+    <!-- End Month -->
+    <div class="col-md-3">
+        <label asp-for="EndMonth" class="form-label"></label>
+        <input asp-for="EndMonth" type="number" min="1" max="12" class="form-control" value="" />
+        <span asp-validation-for="EndMonth" class="text-danger"></span>
+    </div>
+
+    <!-- End Year -->
+    <div class="col-md-3">
+        <label asp-for="EndYear" class="form-label"></label>
+        <input asp-for="EndYear" type="number"
+               min="@Monthly_Bill_Calculator.Common.ModelValidation.MinYear"
+               max="@Monthly_Bill_Calculator.Common.ModelValidation.MaxYear"
+               class="form-control" value="" />
+        <span asp-validation-for="EndYear" class="text-danger"></span>
+    </div>
+
+</div>
+
+<button class="btn btn-primary mt-3">Generate Summary</button>
