@@ -1,0 +1,44 @@
+﻿@model Monthly_Bill_Calculator.Models.SummaryViewModel
+
+@{
+    ViewData["Title"] = "Average Usage Summary";
+}
+
+<h2 class="mb-4">Average Usage Summary</h2>
+
+<form method="post" class="mb-4">
+    @Html.Partial("_DateRangeForm", Model)
+</form>
+
+@if (Model.Utilities != null)
+{
+    <h3 class="mt-4">Average Values</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Utility</th>
+                <th>Average Consumption</th>
+                <th>Average Spent</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.Utilities)
+            {
+                <tr>
+                    <td>@item.Key</td>
+                    <td>@item.Value.AvgConsumption</td>
+                    <td>@item.Value.AvgPrice</td>
+                </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            <tr class="table-secondary fw-bold">
+                <td colspan="2" class="text-end">Average spent per month:</td>
+                <td>@Model.TotalAverageSpent</td>
+            </tr>
+        </tfoot>
+    </table>
+}
