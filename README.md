@@ -23,12 +23,6 @@ The goal of this project is to make it easy to record, view, and manage monthly 
 - **Bootstrap 5**
 - **C#**
 
-- ## On first start, the user must create the database.
-- Use command in package manager console:
-- Add-Migration InitialCreate
-- after that:
-- Update-Database
-- A database with the name "MonthlyBillCalculator" will be created.
-- It has initial seed data for testing the application.
-- 
+- ## On first start:
+- A database "MonthlyBillCalculator" will be created.
 git clone https://github.com/your-username/Monthly-Bill-Calculator.git
