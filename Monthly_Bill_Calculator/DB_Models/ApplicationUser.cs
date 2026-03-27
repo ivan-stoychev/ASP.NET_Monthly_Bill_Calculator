@@ -12,10 +12,8 @@ namespace Monthly_Bill_Calculator.DB_MModels
         [MaxLength(200)]
         public string? Address { get; set; }
 
-        // Optional: link to bills
         public ICollection<Bill> Bills { get; set; } = new List<Bill>();
 
-        // Optional: link to payments
         public ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }
 }

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Monthly_Bill_Calculator.DB_MModels;
 using Monthly_Bill_Calculator.DB_Models;
 
 namespace Monthly_Bill_Calculator.Data
 {
-    public class CalcAppDbContext : DbContext
+    public class CalcAppDbContext : IdentityDbContext<ApplicationUser>
     {
         public CalcAppDbContext(DbContextOptions<CalcAppDbContext> dbContextOptions)
             : base(dbContextOptions)
@@ -18,6 +20,8 @@ namespace Monthly_Bill_Calculator.Data
         public DbSet<NaturalGas> NaturalGases { get; set; }
         public DbSet<CentralHeating> CentralHeatings { get; set; }
         public DbSet<Month> Months { get; set; }
+        public DbSet<Bill> Bills { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
