@@ -2,9 +2,9 @@
 using Monthly_Bill_Calculator.DB_Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace Monthly_Bill_Calculator.DB_MModels
+namespace Monthly_Bill_Calculator.DB_Models
 {
-    public class ApplicationUser : IdentityUser
+    public class CalcAppUser : IdentityUser
     {
         [MaxLength(100)]
         public string? FullName { get; set; }

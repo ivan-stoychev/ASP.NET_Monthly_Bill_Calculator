@@ -1,5 +1,7 @@
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Monthly_Bill_Calculator.Data;
+using Monthly_Bill_Calculator.DB_Models;
 
 namespace Monthly_Bill_Calculator
 {
@@ -16,12 +18,20 @@ namespace Monthly_Bill_Calculator
                 opt.UseSqlServer(connectionString);
             });
 
-            // Add services to the container
+            // ⭐ Add Identity + Roles
+            builder.Services.AddDefaultIdentity<CalcAppUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+            })
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<CalcAppDbContext>();
+
+            // Add MVC
             builder.Services.AddControllersWithViews();
 
             WebApplication app = builder.Build();
 
-            // Ensure database exists on startup
+            // ⭐ Ensure database exists on startup
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<CalcAppDbContext>();
@@ -40,6 +50,8 @@ namespace Monthly_Bill_Calculator
 
             app.UseRouting();
 
+            // ⭐ Identity middleware
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
