@@ -21,7 +21,7 @@ namespace Monthly_Bill_Calculator.DB_Models
 
         [Required]
         public string UserId { get; set; } = null!;
-        public ApplicationUser User { get; set; } = null!;
+        public CalcAppUser User { get; set; } = null!;
 
         public ICollection<Payment> Payments { get; set; } = new List<Payment>();
 

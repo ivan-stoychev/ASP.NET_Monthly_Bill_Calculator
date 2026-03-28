@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Monthly_Bill_Calculator.DB_MModels;
 using Monthly_Bill_Calculator.DB_Models;
 
 namespace Monthly_Bill_Calculator.Data
