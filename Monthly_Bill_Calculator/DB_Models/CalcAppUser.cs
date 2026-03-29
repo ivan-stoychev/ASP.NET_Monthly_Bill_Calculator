@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Monthly_Bill_Calculator.DB_Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace Monthly_Bill_Calculator.DB_Models

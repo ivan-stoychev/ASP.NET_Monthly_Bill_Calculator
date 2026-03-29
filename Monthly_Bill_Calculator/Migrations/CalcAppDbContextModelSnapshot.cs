@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Monthly_Bill_Calculator.Data;
 
@@ -12,11 +11,9 @@ using Monthly_Bill_Calculator.Data;
 namespace Monthly_Bill_Calculator.Migrations
 {
     [DbContext(typeof(CalcAppDbContext))]
-    [Migration("20260328140626_IdentitySetup")]
-    partial class IdentitySetup
+    partial class CalcAppDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -522,7 +519,7 @@ namespace Monthly_Bill_Calculator.Migrations
                     b.HasOne("Monthly_Bill_Calculator.DB_Models.CalcAppUser", "User")
                         .WithMany("Bills")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -572,13 +569,13 @@ namespace Monthly_Bill_Calculator.Migrations
                     b.HasOne("Monthly_Bill_Calculator.DB_Models.Bill", "Bill")
                         .WithMany("Payments")
                         .HasForeignKey("BillId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Monthly_Bill_Calculator.DB_Models.CalcAppUser", "User")
                         .WithMany("Payments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Bill");

@@ -3,61 +3,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Monthly_Bill_Calculator.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentitySetup : Migration
+    public partial class NewModelSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "Months",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "Months",
-                keyColumn: "Id",
-                keyValue: 2);
-
-            migrationBuilder.DeleteData(
-                table: "Months",
-                keyColumn: "Id",
-                keyValue: 3);
-
-            migrationBuilder.DeleteData(
-                table: "CentralHeatings",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "ColdWaters",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "Electricities",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "HotWaters",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "NaturalGases",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "Steams",
-                keyColumn: "Id",
-                keyValue: 1);
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -97,6 +50,90 @@ namespace Monthly_Bill_Calculator.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CentralHeatings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Consumption = table.Column<double>(type: "float", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CentralHeatings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ColdWaters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Consumption = table.Column<double>(type: "float", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ColdWaters", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Electricities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Consumption = table.Column<double>(type: "float", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Electricities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HotWaters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Consumption = table.Column<double>(type: "float", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HotWaters", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NaturalGases",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Consumption = table.Column<double>(type: "float", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NaturalGases", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Steams",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Consumption = table.Column<double>(type: "float", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Steams", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,7 +263,57 @@ namespace Monthly_Bill_Calculator.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Months",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    MonthNumber = table.Column<int>(type: "int", nullable: false),
+                    ElectricityId = table.Column<int>(type: "int", nullable: true),
+                    ColdWaterId = table.Column<int>(type: "int", nullable: true),
+                    HotWaterId = table.Column<int>(type: "int", nullable: true),
+                    NaturalGasId = table.Column<int>(type: "int", nullable: true),
+                    SteamId = table.Column<int>(type: "int", nullable: true),
+                    CentralHeatingId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Months", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Months_CentralHeatings_CentralHeatingId",
+                        column: x => x.CentralHeatingId,
+                        principalTable: "CentralHeatings",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Months_ColdWaters_ColdWaterId",
+                        column: x => x.ColdWaterId,
+                        principalTable: "ColdWaters",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Months_Electricities_ElectricityId",
+                        column: x => x.ElectricityId,
+                        principalTable: "Electricities",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Months_HotWaters_HotWaterId",
+                        column: x => x.HotWaterId,
+                        principalTable: "HotWaters",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Months_NaturalGases_NaturalGasId",
+                        column: x => x.NaturalGasId,
+                        principalTable: "NaturalGases",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Months_Steams_SteamId",
+                        column: x => x.SteamId,
+                        principalTable: "Steams",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -249,13 +336,13 @@ namespace Monthly_Bill_Calculator.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Payments_Bills_BillId",
                         column: x => x.BillId,
                         principalTable: "Bills",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -303,6 +390,36 @@ namespace Monthly_Bill_Calculator.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Months_CentralHeatingId",
+                table: "Months",
+                column: "CentralHeatingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Months_ColdWaterId",
+                table: "Months",
+                column: "ColdWaterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Months_ElectricityId",
+                table: "Months",
+                column: "ElectricityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Months_HotWaterId",
+                table: "Months",
+                column: "HotWaterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Months_NaturalGasId",
+                table: "Months",
+                column: "NaturalGasId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Months_SteamId",
+                table: "Months",
+                column: "SteamId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Payments_BillId",
                 table: "Payments",
                 column: "BillId");
@@ -332,60 +449,37 @@ namespace Monthly_Bill_Calculator.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Months");
+
+            migrationBuilder.DropTable(
                 name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "CentralHeatings");
+
+            migrationBuilder.DropTable(
+                name: "ColdWaters");
+
+            migrationBuilder.DropTable(
+                name: "Electricities");
+
+            migrationBuilder.DropTable(
+                name: "HotWaters");
+
+            migrationBuilder.DropTable(
+                name: "NaturalGases");
+
+            migrationBuilder.DropTable(
+                name: "Steams");
+
+            migrationBuilder.DropTable(
                 name: "Bills");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.InsertData(
-                table: "CentralHeatings",
-                columns: new[] { "Id", "Consumption", "Price" },
-                values: new object[] { 1, 100.0, 0.15m });
-
-            migrationBuilder.InsertData(
-                table: "ColdWaters",
-                columns: new[] { "Id", "Consumption", "Price" },
-                values: new object[] { 1, 5.0, 2.50m });
-
-            migrationBuilder.InsertData(
-                table: "Electricities",
-                columns: new[] { "Id", "Consumption", "Price" },
-                values: new object[] { 1, 120.0, 0.20m });
-
-            migrationBuilder.InsertData(
-                table: "HotWaters",
-                columns: new[] { "Id", "Consumption", "Price" },
-                values: new object[] { 1, 3.0, 4.00m });
-
-            migrationBuilder.InsertData(
-                table: "Months",
-                columns: new[] { "Id", "CentralHeatingId", "ColdWaterId", "ElectricityId", "HotWaterId", "MonthNumber", "NaturalGasId", "SteamId", "Year" },
-                values: new object[,]
-                {
-                    { 2, null, null, null, null, 12, null, null, 2025 },
-                    { 3, null, null, null, null, 1, null, null, 2026 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "NaturalGases",
-                columns: new[] { "Id", "Consumption", "Price" },
-                values: new object[] { 1, 50.0, 1.20m });
-
-            migrationBuilder.InsertData(
-                table: "Steams",
-                columns: new[] { "Id", "Consumption", "Price" },
-                values: new object[] { 1, 10.0, 3.00m });
-
-            migrationBuilder.InsertData(
-                table: "Months",
-                columns: new[] { "Id", "CentralHeatingId", "ColdWaterId", "ElectricityId", "HotWaterId", "MonthNumber", "NaturalGasId", "SteamId", "Year" },
-                values: new object[] { 1, 1, 1, 1, 1, 11, 1, 1, 2025 });
         }
     }
 }

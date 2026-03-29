@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Monthly_Bill_Calculator.DB_Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Monthly_Bill_Calculator.DB_Models;
-using Monthly_Bill_Calculator.Models;
 
 namespace Monthly_Bill_Calculator.Data
 {
@@ -19,12 +18,15 @@ namespace Monthly_Bill_Calculator.Data
         public DbSet<NaturalGas> NaturalGases { get; set; }
         public DbSet<CentralHeating> CentralHeatings { get; set; }
         public DbSet<Month> Months { get; set; }
+
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Payment> Payments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<CalcAppUser>();
 
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.Bill)
@@ -34,13 +36,13 @@ namespace Monthly_Bill_Calculator.Data
 
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.User)
-                .WithMany()
+                .WithMany(u => u.Payments)
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Bill>()
                 .HasOne(b => b.User)
-                .WithMany()
+                .WithMany(u => u.Bills)
                 .HasForeignKey(b => b.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
