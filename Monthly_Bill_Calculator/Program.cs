@@ -2,23 +2,24 @@
 using Microsoft.EntityFrameworkCore;
 using Monthly_Bill_Calculator.Data;
 using Monthly_Bill_Calculator.DB_Models;
+using Monthly_Bill_Calculator.Data.SeedData;
 
 namespace Monthly_Bill_Calculator
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-            // Register DbContext in DI container
-            builder.Services.AddDbContext<CalcAppDbContext>(opt =>
+            // Register DbContext
+            builder.Services.AddDbContext<CalcAppDbContext>(options =>
             {
-                opt.UseSqlServer(connectionString);
+                options.UseSqlServer(connectionString);
             });
 
-            // ⭐ Add Identity + Roles
+            // Identity + Roles
             builder.Services.AddDefaultIdentity<CalcAppUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -26,19 +27,19 @@ namespace Monthly_Bill_Calculator
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<CalcAppDbContext>();
 
-            // Add MVC
             builder.Services.AddControllersWithViews();
 
             WebApplication app = builder.Build();
 
-            // ⭐ Ensure database exists on startup
-            using (var scope = app.Services.CreateScope())
+            // Ensure DB exists + Seed Roles/Admin
+            using (IServiceScope scope = app.Services.CreateScope())
             {
-                var db = scope.ServiceProvider.GetRequiredService<CalcAppDbContext>();
+                CalcAppDbContext db = scope.ServiceProvider.GetRequiredService<CalcAppDbContext>();
                 db.Database.EnsureCreated();
+
+                await SeedAdminRole.SeedAsync(scope.ServiceProvider);
             }
 
-            // Configure the HTTP request pipeline
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -50,10 +51,15 @@ namespace Monthly_Bill_Calculator
 
             app.UseRouting();
 
-            // ⭐ Identity middleware
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // Area routing
+            app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+            // Default route
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
