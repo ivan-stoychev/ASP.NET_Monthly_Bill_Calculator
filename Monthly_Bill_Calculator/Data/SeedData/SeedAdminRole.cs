@@ -7,8 +7,8 @@ namespace Monthly_Bill_Calculator.Data.SeedData
     {
         public static async Task SeedAsync(IServiceProvider serviceProvider)
         {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = serviceProvider.GetRequiredService<UserManager<CalcAppUser>>();
+            RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            UserManager<CalcAppUser> userManager = serviceProvider.GetRequiredService<UserManager<CalcAppUser>>();
 
             string[] roles = { "Admin", "User" };
 
@@ -18,16 +18,18 @@ namespace Monthly_Bill_Calculator.Data.SeedData
                     await roleManager.CreateAsync(new IdentityRole(role));
             }
 
-            string adminUsername = "SuperAdmin";
+            string adminEmail = "superadmin@example.com";
             string adminPassword = "SuperSecret";
 
-            CalcAppUser admin = await userManager.FindByNameAsync(adminUsername);
+            CalcAppUser admin = await userManager.FindByEmailAsync(adminEmail);
 
             if (admin == null)
             {
                 admin = new CalcAppUser
                 {
-                    UserName = adminUsername,
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    EmailConfirmed = true
                 };
 
                 IdentityResult result = await userManager.CreateAsync(admin, adminPassword);
@@ -35,6 +37,14 @@ namespace Monthly_Bill_Calculator.Data.SeedData
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(admin, "Admin");
+                }
+                else
+                {
+                    // Optional: log errors for debugging
+                    foreach (var error in result.Errors)
+                    {
+                        Console.WriteLine($"Seeding error: {error.Description}");
+                    }
                 }
             }
         }

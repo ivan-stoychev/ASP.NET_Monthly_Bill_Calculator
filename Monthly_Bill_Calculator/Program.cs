@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Monthly_Bill_Calculator.Data;
 using Monthly_Bill_Calculator.DB_Models;
@@ -35,11 +35,14 @@ namespace Monthly_Bill_Calculator
             using (IServiceScope scope = app.Services.CreateScope())
             {
                 CalcAppDbContext db = scope.ServiceProvider.GetRequiredService<CalcAppDbContext>();
-                db.Database.EnsureCreated();
+
+                // Correct method for Identity + SQL Server
+                db.Database.Migrate();
 
                 await SeedAdminRole.SeedAsync(scope.ServiceProvider);
             }
 
+            // Pipeline
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -53,6 +56,9 @@ namespace Monthly_Bill_Calculator
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // Identity UI
+            app.MapRazorPages();
 
             // Area routing
             app.MapControllerRoute(
