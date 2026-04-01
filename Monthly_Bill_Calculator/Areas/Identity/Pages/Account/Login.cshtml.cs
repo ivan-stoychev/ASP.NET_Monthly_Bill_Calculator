@@ -58,7 +58,6 @@ namespace Monthly_Bill_Calculator.Areas.Identity.Pages.Account
 
             returnUrl ??= Url.Content("~/");
 
-            // Clear external cookies
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -83,25 +82,33 @@ namespace Monthly_Bill_Calculator.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+
+                    // ⭐ ROLE‑BASED REDIRECT
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+
+                    if (await _signInManager.UserManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        return LocalRedirect("/Admin");
+                    }
+
+                    return LocalRedirect("/User");
                 }
+
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
+
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
-                }
+
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return Page();
             }
 
-            // Something failed
             return Page();
         }
     }
