@@ -7,6 +7,5 @@ namespace Monthly_Bill_Calculator.DB_Models
     {
         public ICollection<Bill> Bills { get; set; } = new List<Bill>();
 
-        public ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }
 }
