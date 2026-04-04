@@ -48,6 +48,7 @@ namespace Monthly_Bill_Calculator.Controllers
                 .Include(m => m.NaturalGas)
                 .Include(m => m.Steam)
                 .Include(m => m.CentralHeating)
+                .Where(m => m.IsPaid)
                 .Where(m => (m.Year * 100 + m.MonthNumber) >= start &&
                             (m.Year * 100 + m.MonthNumber) <= end)
                 .ToList();

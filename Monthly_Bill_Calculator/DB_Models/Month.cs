@@ -18,6 +18,8 @@ namespace Monthly_Bill_Calculator.DB_Models
         [Range(MinMonth, MaxMonth, ErrorMessage = "Month number must be between 1 and 12.")]
         public int MonthNumber { get; set; }
 
+        public bool IsPaid { get; set; } = false;
+
         // Foreign keys
         public int? ElectricityId { get; set; }
         public int? ColdWaterId { get; set; }
