@@ -12,7 +12,7 @@ using Monthly_Bill_Calculator.Data;
 namespace Monthly_Bill_Calculator.Migrations
 {
     [DbContext(typeof(CalcAppDbContext))]
-    [Migration("20260331161909_InitialCreate")]
+    [Migration("20260404160351_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -160,41 +160,6 @@ namespace Monthly_Bill_Calculator.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("Monthly_Bill_Calculator.DB_Models.Bill", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsPaid")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Bills");
                 });
 
             modelBuilder.Entity("Monthly_Bill_Calculator.DB_Models.CalcAppUser", b =>
@@ -358,6 +323,9 @@ namespace Monthly_Bill_Calculator.Migrations
                     b.Property<int?>("HotWaterId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
                     b.Property<int>("MonthNumber")
                         .HasColumnType("int");
 
@@ -404,39 +372,6 @@ namespace Monthly_Bill_Calculator.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("NaturalGases");
-                });
-
-            modelBuilder.Entity("Monthly_Bill_Calculator.DB_Models.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("BillId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Method")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PaidOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BillId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("Monthly_Bill_Calculator.DB_Models.Steam", b =>
@@ -509,17 +444,6 @@ namespace Monthly_Bill_Calculator.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Monthly_Bill_Calculator.DB_Models.Bill", b =>
-                {
-                    b.HasOne("Monthly_Bill_Calculator.DB_Models.CalcAppUser", "User")
-                        .WithMany("Bills")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Monthly_Bill_Calculator.DB_Models.Month", b =>
                 {
                     b.HasOne("Monthly_Bill_Calculator.DB_Models.CentralHeating", "CentralHeating")
@@ -557,37 +481,6 @@ namespace Monthly_Bill_Calculator.Migrations
                     b.Navigation("NaturalGas");
 
                     b.Navigation("Steam");
-                });
-
-            modelBuilder.Entity("Monthly_Bill_Calculator.DB_Models.Payment", b =>
-                {
-                    b.HasOne("Monthly_Bill_Calculator.DB_Models.Bill", "Bill")
-                        .WithMany("Payments")
-                        .HasForeignKey("BillId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Monthly_Bill_Calculator.DB_Models.CalcAppUser", "User")
-                        .WithMany("Payments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Bill");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Monthly_Bill_Calculator.DB_Models.Bill", b =>
-                {
-                    b.Navigation("Payments");
-                });
-
-            modelBuilder.Entity("Monthly_Bill_Calculator.DB_Models.CalcAppUser", b =>
-                {
-                    b.Navigation("Bills");
-
-                    b.Navigation("Payments");
                 });
 #pragma warning restore 612, 618
         }

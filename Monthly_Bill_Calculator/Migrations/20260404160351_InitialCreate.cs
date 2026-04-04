@@ -241,30 +241,6 @@ namespace Monthly_Bill_Calculator.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Bills",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsPaid = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bills", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bills_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Months",
                 columns: table => new
                 {
@@ -272,6 +248,7 @@ namespace Monthly_Bill_Calculator.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Year = table.Column<int>(type: "int", nullable: false),
                     MonthNumber = table.Column<int>(type: "int", nullable: false),
+                    IsPaid = table.Column<bool>(type: "bit", nullable: false),
                     ElectricityId = table.Column<int>(type: "int", nullable: true),
                     ColdWaterId = table.Column<int>(type: "int", nullable: true),
                     HotWaterId = table.Column<int>(type: "int", nullable: true),
@@ -314,35 +291,6 @@ namespace Monthly_Bill_Calculator.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Payments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BillId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PaidOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Method = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Payments_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Payments_Bills_BillId",
-                        column: x => x.BillId,
-                        principalTable: "Bills",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -383,11 +331,6 @@ namespace Monthly_Bill_Calculator.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bills_UserId",
-                table: "Bills",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Months_CentralHeatingId",
                 table: "Months",
                 column: "CentralHeatingId");
@@ -416,16 +359,6 @@ namespace Monthly_Bill_Calculator.Migrations
                 name: "IX_Months_SteamId",
                 table: "Months",
                 column: "SteamId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Payments_BillId",
-                table: "Payments",
-                column: "BillId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Payments_UserId",
-                table: "Payments",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -450,10 +383,10 @@ namespace Monthly_Bill_Calculator.Migrations
                 name: "Months");
 
             migrationBuilder.DropTable(
-                name: "Payments");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "CentralHeatings");
@@ -472,12 +405,6 @@ namespace Monthly_Bill_Calculator.Migrations
 
             migrationBuilder.DropTable(
                 name: "Steams");
-
-            migrationBuilder.DropTable(
-                name: "Bills");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
         }
     }
 }
