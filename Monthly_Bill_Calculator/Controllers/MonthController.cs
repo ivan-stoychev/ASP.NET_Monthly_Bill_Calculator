@@ -14,7 +14,6 @@ namespace Monthly_Bill_Calculator.Controllers
             this.dbContext = dbContext;
         }
 
-        // GET - All "Month" objects from DB
         public IActionResult Index()
         {
             var months = dbContext.Months
@@ -32,7 +31,6 @@ namespace Monthly_Bill_Calculator.Controllers
             return View(months);
         }
 
-        // GET - Specific "Month" object
         public IActionResult Details(int id)
         {
             var month = dbContext.Months
@@ -50,13 +48,25 @@ namespace Monthly_Bill_Calculator.Controllers
             return View(month);
         }
 
-        // GET - Shows the form for new "Month" object
+        [HttpPost]
+        public IActionResult MarkAsPaid(int id)
+        {
+            var month = dbContext.Months.Find(id);
+
+            if (month == null)
+                return NotFound();
+
+            month.IsPaid = true;
+            dbContext.SaveChanges();
+
+            return RedirectToAction("Details", new { id });
+        }
+
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST - Creates new "Month" object if valid
         [HttpPost]
         public IActionResult Create(Month month)
         {
@@ -69,7 +79,6 @@ namespace Monthly_Bill_Calculator.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET - Loads the specific "Month" object to be edited
         public IActionResult Edit(int id)
         {
             var month = dbContext.Months
@@ -87,7 +96,6 @@ namespace Monthly_Bill_Calculator.Controllers
             return View(month);
         }
 
-        // POST - Edits values of the specified "Month" object
         [HttpPost]
         public IActionResult Edit(Month month)
         {
@@ -100,7 +108,6 @@ namespace Monthly_Bill_Calculator.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET - Loads the specified "Month" object to be deleted
         public IActionResult Delete(int id)
         {
             var month = dbContext.Months
@@ -118,7 +125,6 @@ namespace Monthly_Bill_Calculator.Controllers
             return View(month);
         }
 
-        // POST - Deletes the specified "Month" object
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {

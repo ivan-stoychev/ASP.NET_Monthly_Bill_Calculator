@@ -19,19 +19,11 @@ namespace Monthly_Bill_Calculator.Data
         public DbSet<CentralHeating> CentralHeatings { get; set; }
         public DbSet<Month> Months { get; set; }
 
-        public DbSet<Bill> Bills { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<CalcAppUser>();
-
-            modelBuilder.Entity<Bill>()
-                .HasOne(b => b.User)
-                .WithMany(u => u.Bills)
-                .HasForeignKey(b => b.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -1,0 +1,99 @@
+﻿@model Monthly_Bill_Calculator.DB_Models.Month
+
+@{
+    ViewData["Title"] = "Month Details";
+}
+
+<h2 class="mb-4">Month Details</h2>
+
+<div class="mb-3">
+    <strong>Year:</strong> @Model.Year
+</div>
+
+<div class="mb-3">
+    <strong>Month:</strong> @Model.MonthNumber
+</div>
+
+<div class="mb-3">
+    <strong>Status:</strong>
+    @if (Model.IsPaid)
+    {
+        <span class="badge bg-success">Paid</span>
+    }
+    else
+    {
+        <span class="badge bg-warning text-dark">Unpaid</span>
+    }
+</div>
+
+<hr />
+
+<h4 class="mt-4">Utility Breakdown</h4>
+
+<table class="table table-bordered mt-3">
+    <thead class="table-light">
+        <tr>
+            <th>Utility</th>
+            <th>Consumption</th>
+            <th>Price per Unit</th>
+            <th>Cost</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Electricity</td>
+            <td>@Model.Electricity?.Consumption</td>
+            <td>@Model.Electricity?.Price</td>
+            <td>@Model.Electricity?.MonthlyCost.ToString("0.00")</td>
+        </tr>
+        <tr>
+            <td>Cold Water</td>
+            <td>@Model.ColdWater?.Consumption</td>
+            <td>@Model.ColdWater?.Price</td>
+            <td>@Model.ColdWater?.MonthlyCost.ToString("0.00")</td>
+        </tr>
+        <tr>
+            <td>Hot Water</td>
+            <td>@Model.HotWater?.Consumption</td>
+            <td>@Model.HotWater?.Price</td>
+            <td>@Model.HotWater?.MonthlyCost.ToString("0.00")</td>
+        </tr>
+        <tr>
+            <td>Natural Gas</td>
+            <td>@Model.NaturalGas?.Consumption</td>
+            <td>@Model.NaturalGas?.Price</td>
+            <td>@Model.NaturalGas?.MonthlyCost.ToString("0.00")</td>
+        </tr>
+        <tr>
+            <td>Steam</td>
+            <td>@Model.Steam?.Consumption</td>
+            <td>@Model.Steam?.Price</td>
+            <td>@Model.Steam?.MonthlyCost.ToString("0.00")</td>
+        </tr>
+        <tr>
+            <td>Central Heating</td>
+            <td>@Model.CentralHeating?.Consumption</td>
+            <td>@Model.CentralHeating?.Price</td>
+            <td>@Model.CentralHeating?.MonthlyCost.ToString("0.00")</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="mt-3">
+    <strong>Total Cost:</strong>
+    <span class="fw-bold">@Model.Total.ToString("0.00")</span>
+</div>
+
+<hr />
+
+<div class="mt-4">
+    @if (!Model.IsPaid)
+    {
+        <!-- User pays the bill -->
+        <form asp-action="MarkAsPaid" asp-route-id="@Model.Id" method="post">
+            <button type="submit" class="btn btn-success">Mark as Paid</button>
+        </form>
+    }
+
+    <a asp-action="Index" class="btn btn-secondary mt-2">Back to List</a>
+</div>
