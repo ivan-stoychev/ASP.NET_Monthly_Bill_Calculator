@@ -11,6 +11,7 @@
         <tr>
             <th>Year</th>
             <th>Month</th>
+            <th>Status</th>
             <th>Electricity</th>
             <th>Cold Water</th>
             <th>Hot Water</th>
@@ -38,6 +39,17 @@
                 <td>@m.Year</td>
                 <td>@m.MonthNumber</td>
 
+                <td>
+                    @if (m.IsPaid)
+                    {
+                        <span class="badge bg-success">Paid</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Unpaid</span>
+                    }
+                </td>
+
                 <td>@electricity.ToString("0.00")</td>
                 <td>@coldWater.ToString("0.00")</td>
                 <td>@hotWater.ToString("0.00")</td>
@@ -48,7 +60,7 @@
                 <td class="fw-bold">@total.ToString("0.00")</td>
 
                 <td>
-                     <a asp-action="Edit" asp-route-id="@m.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Edit" asp-route-id="@m.Id" class="btn btn-sm btn-warning">Edit</a>
                     <a asp-action="Delete" asp-route-id="@m.Id" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>

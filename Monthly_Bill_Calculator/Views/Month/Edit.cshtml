@@ -25,6 +25,12 @@
         <span asp-validation-for="MonthNumber" class="text-danger"></span>
     </div>
 
+    <!-- Paid Status -->
+    <div class="form-check mb-4">
+        <input asp-for="IsPaid" class="form-check-input" />
+        <label asp-for="IsPaid" class="form-check-label">Mark as Paid</label>
+    </div>
+
     <hr />
     <h4 class="mt-4">Utilities</h4>
 
@@ -117,7 +123,8 @@
     <div class="border rounded p-3 mb-4">
         <h5>Central Heating</h5>
         <div class="row">
-            <div class="col-md-6 mb-3">Consumption (GJ)</label>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Consumption (GJ)</label>
                 <input name="CentralHeating.Consumption" class="form-control"
                        value="@Model.CentralHeating?.Consumption" />
             </div>

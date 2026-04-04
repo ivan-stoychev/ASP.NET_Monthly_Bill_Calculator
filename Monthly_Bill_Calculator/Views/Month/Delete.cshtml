@@ -11,12 +11,26 @@
 <div class="mb-3">
     <strong>Year:</strong> @Model.Year
 </div>
+
 <div class="mb-3">
     <strong>Month:</strong> @Model.MonthNumber
 </div>
 
+<div class="mb-3">
+    <strong>Status:</strong>
+    @if (Model.IsPaid)
+    {
+        <span class="badge bg-success">Paid</span>
+    }
+    else
+    {
+        <span class="badge bg-warning text-dark">Unpaid</span>
+    }
+</div>
+
 <form asp-action="Delete" method="post">
     <input type="hidden" asp-for="Id" />
+
     <button type="submit" class="btn btn-danger">Delete</button>
     <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
 </form>

@@ -23,6 +23,12 @@
         <span asp-validation-for="MonthNumber" class="text-danger"></span>
     </div>
 
+    <!-- Paid Status -->
+    <div class="form-check mb-4">
+        <input asp-for="IsPaid" class="form-check-input" />
+        <label asp-for="IsPaid" class="form-check-label">Mark as Paid</label>
+    </div>
+
     <hr />
     <h4 class="mt-4">Utilities (optional)</h4>
     <p class="text-muted">Fill in only the utilities you want to include.</p>
