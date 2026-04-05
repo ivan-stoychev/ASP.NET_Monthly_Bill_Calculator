@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Monthly_Bill_Calculator.Data;
 using Monthly_Bill_Calculator.DB_Models;
 
-namespace Monthly_Bill_Calculator.Controllers
+namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminMonthController : Controller
     {
         private readonly CalcAppDbContext dbContext;
