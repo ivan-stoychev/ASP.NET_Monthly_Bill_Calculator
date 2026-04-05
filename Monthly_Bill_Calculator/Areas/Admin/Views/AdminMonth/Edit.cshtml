@@ -1,0 +1,108 @@
+﻿@model Monthly_Bill_Calculator.DB_Models.Month
+
+@{
+    ViewData["Title"] = "Edit Month";
+}
+
+<h2 class="mb-4">Edit Month</h2>
+
+<form asp-action="Edit" method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Year" class="form-label"></label>
+            <input asp-for="Year" class="form-control" />
+            <span asp-validation-for="Year" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="MonthNumber" class="form-label"></label>
+            <input asp-for="MonthNumber" class="form-control" />
+            <span asp-validation-for="MonthNumber" class="text-danger"></span>
+        </div>
+    </div>
+
+    <hr />
+
+    <h4 class="mt-4">Electricity</h4>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="form-label">Consumption</label>
+            <input name="Electricity.Consumption" class="form-control" value="@Model.Electricity?.Consumption" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Price</label>
+            <input name="Electricity.Price" class="form-control" value="@Model.Electricity?.Price" />
+        </div>
+    </div>
+
+    <h4>Cold Water</h4>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="form-label">Consumption</label>
+            <input name="ColdWater.Consumption" class="form-control" value="@Model.ColdWater?.Consumption" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Price</label>
+            <input name="ColdWater.Price" class="form-control" value="@Model.ColdWater?.Price" />
+        </div>
+    </div>
+
+    <h4>Hot Water</h4>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="form-label">Consumption</label>
+            <input name="HotWater.Consumption" class="form-control" value="@Model.HotWater?.Consumption" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Price</label>
+            <input name="HotWater.Price" class="form-control" value="@Model.HotWater?.Price" />
+        </div>
+    </div>
+
+    <h4>Natural Gas</h4>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="form-label">Consumption</label>
+            <input name="NaturalGas.Consumption" class="form-control" value="@Model.NaturalGas?.Consumption" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Price</label>
+            <input name="NaturalGas.Price" class="form-control" value="@Model.NaturalGas?.Price" />
+        </div>
+    </div>
+
+    <h4>Steam</h4>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="form-label">Consumption</label>
+            <input name="Steam.Consumption" class="form-control" value="@Model.Steam?.Consumption" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Price</label>
+            <input name="Steam.Price" class="form-control" value="@Model.Steam?.Price" />
+        </div>
+    </div>
+
+    <h4>Central Heating</h4>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <label class="form-label">Consumption</label>
+            <input name="CentralHeating.Consumption" class="form-control" value="@Model.CentralHeating?.Consumption" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Price</label>
+            <input name="CentralHeating.Price" class="form-control" value="@Model.CentralHeating?.Price" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
