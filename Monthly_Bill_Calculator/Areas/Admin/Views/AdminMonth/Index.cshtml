@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Monthly_Bill_Calculator.DB_Models.Month>
+
+@{
+    ViewData["Title"] = "Manage Months";
+}
+
+<h2 class="mb-4">Manage Months</h2>
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-primary">Create New Month</a>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
+        <tr>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th style="width: 220px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td>@m.Year</td>
+                <td>@m.MonthNumber</td>
+                <td>@m.Total.ToString("0.00")</td>
+                <td>
+                    @if (m.IsPaid)
+                    {
+                        <span class="badge bg-success">Paid</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Unpaid</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@m.Id" class="btn btn-sm btn-info me-1">Details</a>
+                    <a asp-action="Edit" asp-route-id="@m.Id" class="btn btn-sm btn-warning me-1">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@m.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
