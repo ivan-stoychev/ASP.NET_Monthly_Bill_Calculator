@@ -5,11 +5,11 @@ using Monthly_Bill_Calculator.DB_Models;
 
 namespace Monthly_Bill_Calculator.Controllers
 {
-    public class AdminController : Controller
+    public class AdminMonthController : Controller
     {
         private readonly CalcAppDbContext dbContext;
 
-        public AdminController(CalcAppDbContext dbContext)
+        public AdminMonthController(CalcAppDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
