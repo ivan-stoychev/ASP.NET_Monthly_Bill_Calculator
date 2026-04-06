@@ -13,6 +13,7 @@
 <table class="table table-bordered table-striped">
     <thead class="table-light">
         <tr>
+            <th>User</th>
             <th>Year</th>
             <th>Month</th>
             <th>Total</th>
@@ -24,6 +25,7 @@
         @foreach (var m in Model)
         {
             <tr>
+                <td>@m.User?.Email</td>
                 <td>@m.Year</td>
                 <td>@m.MonthNumber</td>
                 <td>@m.Total.ToString("0.00")</td>

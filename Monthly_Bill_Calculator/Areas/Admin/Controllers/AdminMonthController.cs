@@ -20,6 +20,7 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var months = dbContext.Months
+                .Include(m => m.User)
                 .Include(m => m.Electricity)
                 .Include(m => m.ColdWater)
                 .Include(m => m.HotWater)
@@ -36,6 +37,7 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
+            ViewBag.Users = dbContext.Users.ToList();
             return View();
         }
 
@@ -43,7 +45,10 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
         public IActionResult Create(Month month)
         {
             if (!ModelState.IsValid)
+            {
+                ViewBag.Users = dbContext.Users.ToList();
                 return View(month);
+            }
 
             dbContext.Months.Add(month);
             dbContext.SaveChanges();
@@ -54,6 +59,7 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
         public IActionResult Edit(int id)
         {
             var month = dbContext.Months
+                .Include(m => m.User)
                 .Include(m => m.Electricity)
                 .Include(m => m.ColdWater)
                 .Include(m => m.HotWater)
@@ -65,6 +71,7 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
             if (month == null)
                 return NotFound();
 
+            ViewBag.Users = dbContext.Users.ToList();
             return View(month);
         }
 
@@ -72,7 +79,10 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
         public IActionResult Edit(Month month)
         {
             if (!ModelState.IsValid)
+            {
+                ViewBag.Users = dbContext.Users.ToList();
                 return View(month);
+            }
 
             dbContext.Update(month);
             dbContext.SaveChanges();
@@ -83,6 +93,7 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             var month = dbContext.Months
+                .Include(m => m.User)
                 .Include(m => m.Electricity)
                 .Include(m => m.ColdWater)
                 .Include(m => m.HotWater)
@@ -114,6 +125,7 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
         public IActionResult Details(int id)
         {
             var month = dbContext.Months
+                .Include(m => m.User)
                 .Include(m => m.Electricity)
                 .Include(m => m.ColdWater)
                 .Include(m => m.HotWater)

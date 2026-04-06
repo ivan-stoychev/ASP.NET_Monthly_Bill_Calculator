@@ -8,17 +8,28 @@
 
 <form asp-action="Create" method="post">
 
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label asp-for="Year" class="form-label"></label>
-            <input asp-for="Year" class="form-control" />
-            <span asp-validation-for="Year" class="text-danger"></span>
-        </div>
+    <!-- USER DROPDOWN -->
+    <div class="mb-3">
+        <label class="form-label">Assign to User</label>
+        <select name="UserId" class="form-select">
+            @foreach (var u in ViewBag.Users)
+            {
+                <option value="@u.Id">@u.Email</option>
+            }
+        </select>
+    </div>
 
+    <div class="row mb-3">
         <div class="col-md-6">
             <label asp-for="MonthNumber" class="form-label"></label>
             <input asp-for="MonthNumber" class="form-control" />
             <span asp-validation-for="MonthNumber" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Year" class="form-label"></label>
+            <input asp-for="Year" class="form-control" />
+            <span asp-validation-for="Year" class="text-danger"></span>
         </div>
     </div>
 
