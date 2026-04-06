@@ -1,0 +1,88 @@
+﻿@model Monthly_Bill_Calculator.DB_Models.Month
+
+@{
+    ViewData["Title"] = "Month Details";
+}
+
+<h2 class="mb-4">Month Details</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+
+        <h4 class="card-title">General Information</h4>
+
+        <p><strong>Year:</strong> @Model.Year</p>
+        <p><strong>Month:</strong> @Model.MonthNumber</p>
+        <p><strong>Total Cost:</strong> @Model.Total.ToString("0.00")</p>
+
+        <p>
+            <strong>Status:</strong>
+            @if (Model.IsPaid)
+            {
+                <span class="badge bg-success">Paid</span>
+            }
+            else
+            {
+                <span class="badge bg-warning text-dark">Unpaid</span>
+            }
+        </p>
+
+    </div>
+</div>
+
+<h4>Utility Breakdown</h4>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
+        <tr>
+            <th>Utility</th>
+            <th>Consumption</th>
+            <th>Price</th>
+            <th>Cost</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Electricity</td>
+            <td>@Model.Electricity?.Consumption</td>
+            <td>@Model.Electricity?.Price</td>
+            <td>@Model.Electricity?.MonthlyCost.ToString("0.00")</td>
+        </tr>
+        <tr>
+            <td>Cold Water</td>
+            <td>@Model.ColdWater?.Consumption</td>
+            <td>@Model.ColdWater?.Price</td>
+            <td>@Model.ColdWater?.MonthlyCost.ToString("0.00")</td>
+        </tr>
+        <tr>
+            <td>Hot Water</td>
+            <td>@Model.HotWater?.Consumption</td>
+            <td>@Model.HotWater?.Price</td>
+            <td>@Model.HotWater?.MonthlyCost.ToString("0.00")</td>
+        </tr>
+        <tr>
+            <td>Natural Gas</td>
+            <td>@Model.NaturalGas?.Consumption</td>
+            <td>@Model.NaturalGas?.Price</td>
+            <td>@Model.NaturalGas?.MonthlyCost.ToString("0.00")</td>
+        </tr>
+        <tr>
+            <td>Steam</td>
+            <td>@Model.Steam?.Consumption</td>
+            <td>@Model.Steam?.Price</td>
+            <td>@Model.Steam?.MonthlyCost.ToString("0.00")</td>
+        </tr>
+        <tr>
+            <td>Central Heating</td>
+            <td>@Model.CentralHeating?.Consumption</td>
+            <td>@Model.CentralHeating?.Price</td>
+            <td>@Model.CentralHeating?.MonthlyCost.ToString("0.00")</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="mt-4">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger ms-2">Delete</a>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+</div>
