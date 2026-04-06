@@ -12,10 +12,15 @@
 
 @if (Model.Utilities != null)
 {
+    <div class="alert alert-info">
+        <strong>Showing totals for:</strong>
+        @Model.StartMonth/@Model.StartYear – @Model.EndMonth/@Model.EndYear
+    </div>
+
     <h3 class="mt-4">Total Values</h3>
 
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered table-striped">
+        <thead class="table-light">
             <tr>
                 <th>Utility</th>
                 <th>Total Consumption</th>
@@ -28,8 +33,8 @@
             {
                 <tr>
                     <td>@item.Key</td>
-                    <td>@item.Value.TotalConsumption</td>
-                    <td>@item.Value.TotalPrice</td>
+                    <td>@item.Value.TotalConsumption.ToString("0.00")</td>
+                    <td>@item.Value.TotalPrice.ToString("0.00")</td>
                 </tr>
             }
         </tbody>
@@ -37,7 +42,7 @@
         <tfoot>
             <tr class="table-secondary fw-bold">
                 <td colspan="2" class="text-end">Total spent on bills:</td>
-                <td>@Model.TotalSpent</td>
+                <td>@Model.TotalSpent.ToString("0.00")</td>
             </tr>
         </tfoot>
     </table>
