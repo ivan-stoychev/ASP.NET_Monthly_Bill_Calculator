@@ -17,11 +17,16 @@ namespace Monthly_Bill_Calculator.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<CalcAppUser> _signInManager;
+        private readonly UserManager<CalcAppUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<CalcAppUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(
+            SignInManager<CalcAppUser> signInManager,
+            UserManager<CalcAppUser> userManager,
+            ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -83,15 +88,15 @@ namespace Monthly_Bill_Calculator.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
 
-                    // ⭐ ROLE‑BASED REDIRECT
-                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
 
-                    if (await _signInManager.UserManager.IsInRoleAsync(user, "Admin"))
+                    // ⭐ ROLE‑BASED REDIRECT
+                    if (await _userManager.IsInRoleAsync(user, "Admin"))
                     {
-                        return LocalRedirect("/Admin");
+                        return RedirectToAction("Index", "AdminMonth", new { area = "Admin" });
                     }
 
-                    return LocalRedirect("/User");
+                    return RedirectToAction("Index", "Month");
                 }
 
                 if (result.RequiresTwoFactor)
