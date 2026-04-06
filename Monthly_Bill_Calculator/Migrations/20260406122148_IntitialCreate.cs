@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Monthly_Bill_Calculator.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class IntitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -249,6 +249,7 @@ namespace Monthly_Bill_Calculator.Migrations
                     Year = table.Column<int>(type: "int", nullable: false),
                     MonthNumber = table.Column<int>(type: "int", nullable: false),
                     IsPaid = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ElectricityId = table.Column<int>(type: "int", nullable: true),
                     ColdWaterId = table.Column<int>(type: "int", nullable: true),
                     HotWaterId = table.Column<int>(type: "int", nullable: true),
@@ -259,6 +260,12 @@ namespace Monthly_Bill_Calculator.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Months", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Months_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Months_CentralHeatings_CentralHeatingId",
                         column: x => x.CentralHeatingId,
@@ -359,6 +366,11 @@ namespace Monthly_Bill_Calculator.Migrations
                 name: "IX_Months_SteamId",
                 table: "Months",
                 column: "SteamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Months_UserId",
+                table: "Months",
+                column: "UserId");
         }
 
         /// <inheritdoc />

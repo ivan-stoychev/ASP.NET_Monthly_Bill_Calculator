@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Monthly_Bill_Calculator.Data;
 using Monthly_Bill_Calculator.DB_Models;
+using System.Security.Claims;
 
 namespace Monthly_Bill_Calculator.Controllers
 {
+    [Authorize]
     public class MonthController : Controller
     {
         private readonly CalcAppDbContext dbContext;
@@ -16,7 +19,10 @@ namespace Monthly_Bill_Calculator.Controllers
 
         public IActionResult Index()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var months = dbContext.Months
+                .Where(m => m.UserId == userId)
                 .Include(m => m.Electricity)
                 .Include(m => m.ColdWater)
                 .Include(m => m.HotWater)
@@ -33,7 +39,10 @@ namespace Monthly_Bill_Calculator.Controllers
 
         public IActionResult Details(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var month = dbContext.Months
+                .Where(m => m.UserId == userId)
                 .Include(m => m.Electricity)
                 .Include(m => m.ColdWater)
                 .Include(m => m.HotWater)
@@ -51,7 +60,11 @@ namespace Monthly_Bill_Calculator.Controllers
         [HttpPost]
         public IActionResult MarkAsPaid(int id)
         {
-            var month = dbContext.Months.Find(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var month = dbContext.Months
+                .Where(m => m.UserId == userId)
+                .FirstOrDefault(m => m.Id == id);
 
             if (month == null)
                 return NotFound();
@@ -60,83 +73,6 @@ namespace Monthly_Bill_Calculator.Controllers
             dbContext.SaveChanges();
 
             return RedirectToAction("Details", new { id });
-        }
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create(Month month)
-        {
-            if (!ModelState.IsValid)
-                return View(month);
-
-            dbContext.Months.Add(month);
-            dbContext.SaveChanges();
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult Edit(int id)
-        {
-            var month = dbContext.Months
-                .Include(m => m.Electricity)
-                .Include(m => m.ColdWater)
-                .Include(m => m.HotWater)
-                .Include(m => m.NaturalGas)
-                .Include(m => m.Steam)
-                .Include(m => m.CentralHeating)
-                .FirstOrDefault(m => m.Id == id);
-
-            if (month == null)
-                return NotFound();
-
-            return View(month);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(Month month)
-        {
-            if (!ModelState.IsValid)
-                return View(month);
-
-            dbContext.Update(month);
-            dbContext.SaveChanges();
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult Delete(int id)
-        {
-            var month = dbContext.Months
-                .Include(m => m.Electricity)
-                .Include(m => m.ColdWater)
-                .Include(m => m.HotWater)
-                .Include(m => m.NaturalGas)
-                .Include(m => m.Steam)
-                .Include(m => m.CentralHeating)
-                .FirstOrDefault(m => m.Id == id);
-
-            if (month == null)
-                return NotFound();
-
-            return View(month);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            var month = dbContext.Months.Find(id);
-
-            if (month != null)
-            {
-                dbContext.Months.Remove(month);
-                dbContext.SaveChanges();
-            }
-
-            return RedirectToAction(nameof(Index));
         }
     }
 }

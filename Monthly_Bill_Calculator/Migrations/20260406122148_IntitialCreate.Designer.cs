@@ -12,8 +12,8 @@ using Monthly_Bill_Calculator.Data;
 namespace Monthly_Bill_Calculator.Migrations
 {
     [DbContext(typeof(CalcAppDbContext))]
-    [Migration("20260404160351_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260406122148_IntitialCreate")]
+    partial class IntitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -335,6 +335,10 @@ namespace Monthly_Bill_Calculator.Migrations
                     b.Property<int?>("SteamId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
@@ -351,6 +355,8 @@ namespace Monthly_Bill_Calculator.Migrations
                     b.HasIndex("NaturalGasId");
 
                     b.HasIndex("SteamId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Months");
                 });
@@ -470,6 +476,12 @@ namespace Monthly_Bill_Calculator.Migrations
                         .WithMany()
                         .HasForeignKey("SteamId");
 
+                    b.HasOne("Monthly_Bill_Calculator.DB_Models.CalcAppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("CentralHeating");
 
                     b.Navigation("ColdWater");
@@ -481,6 +493,8 @@ namespace Monthly_Bill_Calculator.Migrations
                     b.Navigation("NaturalGas");
 
                     b.Navigation("Steam");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

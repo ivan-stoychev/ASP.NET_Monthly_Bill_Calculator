@@ -16,7 +16,7 @@
         <select name="UserId" class="form-select">
             @foreach (var u in ViewBag.Users)
             {
-                <option value="@u.Id" @(u.Id == Model.UserId ? "selected" : "")>
+                <option value="@u.Id" selected="@(u.Id == Model.UserId)">
                     @u.Email
                 </option>
             }
