@@ -17,12 +17,13 @@ namespace Monthly_Bill_Calculator.Controllers
             this.dbContext = dbContext;
         }
 
+        // USER: View ONLY unpaid bills
         public IActionResult Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var months = dbContext.Months
-                .Where(m => m.UserId == userId)
+                .Where(m => m.UserId == userId && !m.IsPaid)   // ONLY unpaid bills
                 .Include(m => m.Electricity)
                 .Include(m => m.ColdWater)
                 .Include(m => m.HotWater)
@@ -32,11 +33,12 @@ namespace Monthly_Bill_Calculator.Controllers
                 .OrderBy(m => m.Year)
                 .ThenBy(m => m.MonthNumber)
                 .AsNoTracking()
-                .ToArray();
+                .ToList();
 
             return View(months);
         }
 
+        // USER: View details (allowed for both paid and unpaid)
         public IActionResult Details(int id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -57,6 +59,7 @@ namespace Monthly_Bill_Calculator.Controllers
             return View(month);
         }
 
+        // USER: Pay a bill
         [HttpPost]
         public IActionResult MarkAsPaid(int id)
         {
@@ -72,7 +75,7 @@ namespace Monthly_Bill_Calculator.Controllers
             month.IsPaid = true;
             dbContext.SaveChanges();
 
-            return RedirectToAction("Details", new { id });
+            return RedirectToAction("Index");
         }
     }
 }

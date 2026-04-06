@@ -4,23 +4,22 @@
     ViewData["Title"] = "Edit Month";
 }
 
-<h2 class="mb-4">Edit Month</h2>
+<h2 class="mb-4">Edit Bill</h2>
 
 <form asp-action="Edit" method="post">
 
+    <!-- Hidden ID -->
     <input type="hidden" asp-for="Id" />
 
     <!-- USER DROPDOWN -->
     <div class="mb-3">
-        <label class="form-label">Assigned User</label>
-        <select name="UserId" class="form-select">
-            @foreach (var u in ViewBag.Users)
-            {
-                <option value="@u.Id" selected="@(u.Id == Model.UserId)">
-                    @u.Email
-                </option>
-            }
+        <label class="form-label">Assign to User</label>
+        <select asp-for="UserId"
+                class="form-select"
+                asp-items="@(new SelectList(ViewBag.Users, "Id", "Email", Model.UserId))">
+            <option value="">-- Select User --</option>
         </select>
+        <span asp-validation-for="UserId" class="text-danger"></span>
     </div>
 
     <div class="row mb-3">
@@ -39,79 +38,109 @@
 
     <hr />
 
-    <h4 class="mt-4">Electricity</h4>
+    <!-- ELECTRICITY -->
+    <h4 class="mt-4">Electricity (optional)</h4>
     <div class="row mb-3">
         <div class="col-md-6">
-            <label class="form-label">Consumption</label>
-            <input name="Electricity.Consumption" class="form-control" value="@Model.Electricity?.Consumption" />
+            <label class="form-label">Consumption (kWh)</label>
+            <input name="Electricity.Consumption"
+                   class="form-control"
+                   value="@Model.Electricity?.Consumption" />
         </div>
         <div class="col-md-6">
-            <label class="form-label">Price</label>
-            <input name="Electricity.Price" class="form-control" value="@Model.Electricity?.Price" />
+            <label class="form-label">Price per Unit</label>
+            <input name="Electricity.Price"
+                   class="form-control"
+                   value="@Model.Electricity?.Price" />
         </div>
     </div>
 
-    <h4>Cold Water</h4>
+    <!-- COLD WATER -->
+    <h4>Cold Water (optional)</h4>
     <div class="row mb-3">
         <div class="col-md-6">
-            <label class="form-label">Consumption</label>
-            <input name="ColdWater.Consumption" class="form-control" value="@Model.ColdWater?.Consumption" />
+            <label class="form-label">Consumption (m³)</label>
+            <input name="ColdWater.Consumption"
+                   class="form-control"
+                   value="@Model.ColdWater?.Consumption" />
         </div>
         <div class="col-md-6">
-            <label class="form-label">Price</label>
-            <input name="ColdWater.Price" class="form-control" value="@Model.ColdWater?.Price" />
+            <label class="form-label">Price per m³</label>
+            <input name="ColdWater.Price"
+                   class="form-control"
+                   value="@Model.ColdWater?.Price" />
         </div>
     </div>
 
-    <h4>Hot Water</h4>
+    <!-- HOT WATER -->
+    <h4>Hot Water (optional)</h4>
     <div class="row mb-3">
         <div class="col-md-6">
-            <label class="form-label">Consumption</label>
-            <input name="HotWater.Consumption" class="form-control" value="@Model.HotWater?.Consumption" />
+            <label class="form-label">Consumption (m³)</label>
+            <input name="HotWater.Consumption"
+                   class="form-control"
+                   value="@Model.HotWater?.Consumption" />
         </div>
         <div class="col-md-6">
-            <label class="form-label">Price</label>
-            <input name="HotWater.Price" class="form-control" value="@Model.HotWater?.Price" />
+            <label class="form-label">Price per m³</label>
+            <input name="HotWater.Price"
+                   class="form-control"
+                   value="@Model.HotWater?.Price" />
         </div>
     </div>
 
-    <h4>Natural Gas</h4>
+    <!-- NATURAL GAS -->
+    <h4>Natural Gas (optional)</h4>
     <div class="row mb-3">
         <div class="col-md-6">
-            <label class="form-label">Consumption</label>
-            <input name="NaturalGas.Consumption" class="form-control" value="@Model.NaturalGas?.Consumption" />
+            <label class="form-label">Consumption (m³)</label>
+            <input name="NaturalGas.Consumption"
+                   class="form-control"
+                   value="@Model.NaturalGas?.Consumption" />
         </div>
         <div class="col-md-6">
-            <label class="form-label">Price</label>
-            <input name="NaturalGas.Price" class="form-control" value="@Model.NaturalGas?.Price" />
+            <label class="form-label">Price per m³</label>
+            <input name="NaturalGas.Price"
+                   class="form-control"
+                   value="@Model.NaturalGas?.Price" />
         </div>
     </div>
 
-    <h4>Steam</h4>
+    <!-- STEAM -->
+    <h4>Steam (optional)</h4>
     <div class="row mb-3">
         <div class="col-md-6">
             <label class="form-label">Consumption</label>
-            <input name="Steam.Consumption" class="form-control" value="@Model.Steam?.Consumption" />
+            <input name="Steam.Consumption"
+                   class="form-control"
+                   value="@Model.Steam?.Consumption" />
         </div>
         <div class="col-md-6">
-            <label class="form-label">Price</label>
-            <input name="Steam.Price" class="form-control" value="@Model.Steam?.Price" />
+            <label class="form-label">Price per Unit</label>
+            <input name="Steam.Price"
+                   class="form-control"
+                   value="@Model.Steam?.Price" />
         </div>
     </div>
 
-    <h4>Central Heating</h4>
+    <!-- CENTRAL HEATING -->
+    <h4>Central Heating (optional)</h4>
     <div class="row mb-4">
         <div class="col-md-6">
             <label class="form-label">Consumption</label>
-            <input name="CentralHeating.Consumption" class="form-control" value="@Model.CentralHeating?.Consumption" />
+            <input name="CentralHeating.Consumption"
+                   class="form-control"
+                   value="@Model.CentralHeating?.Consumption" />
         </div>
         <div class="col-md-6">
-            <label class="form-label">Price</label>
-            <input name="CentralHeating.Price" class="form-control" value="@Model.CentralHeating?.Price" />
+            <label class="form-label">Price per Unit</label>
+            <input name="CentralHeating.Price"
+                   class="form-control"
+                   value="@Model.CentralHeating?.Price" />
         </div>
     </div>
 
-    <button type="submit" class="btn btn-success">Save Changes</button>
+    <button type="submit" class="btn btn-warning">Save Changes</button>
     <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
 
 </form>

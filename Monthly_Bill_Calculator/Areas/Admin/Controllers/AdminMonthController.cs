@@ -17,6 +17,7 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
             this.dbContext = dbContext;
         }
 
+        // ADMIN: View all bills
         public IActionResult Index()
         {
             var months = dbContext.Months
@@ -27,14 +28,14 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
                 .Include(m => m.NaturalGas)
                 .Include(m => m.Steam)
                 .Include(m => m.CentralHeating)
-                .OrderBy(m => m.Year)
-                .ThenBy(m => m.MonthNumber)
-                .AsNoTracking()
-                .ToArray();
+                .OrderByDescending(m => m.Year)
+                .ThenByDescending(m => m.MonthNumber)
+                .ToList();
 
             return View(months);
         }
 
+        // ADMIN: Create bill
         public IActionResult Create()
         {
             ViewBag.Users = dbContext.Users.ToList();
@@ -44,11 +45,16 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Month month)
         {
-            if (!ModelState.IsValid)
-            {
-                ViewBag.Users = dbContext.Users.ToList();
-                return View(month);
-            }
+            // Always create utility objects if missing
+            month.Electricity ??= new Electricity();
+            month.ColdWater ??= new ColdWater();
+            month.HotWater ??= new HotWater();
+            month.NaturalGas ??= new NaturalGas();
+            month.Steam ??= new Steam();
+            month.CentralHeating ??= new CentralHeating();
+
+            // Default
+            month.IsPaid = false;
 
             dbContext.Months.Add(month);
             dbContext.SaveChanges();
@@ -56,6 +62,7 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // ADMIN: Edit bill
         public IActionResult Edit(int id)
         {
             var month = dbContext.Months
@@ -78,28 +85,17 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(Month month)
         {
-            if (!ModelState.IsValid)
-            {
-                ViewBag.Users = dbContext.Users.ToList();
-                return View(month);
-            }
-
-            dbContext.Update(month);
+            dbContext.Months.Update(month);
             dbContext.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }
 
+        // ADMIN: Delete bill
         public IActionResult Delete(int id)
         {
             var month = dbContext.Months
                 .Include(m => m.User)
-                .Include(m => m.Electricity)
-                .Include(m => m.ColdWater)
-                .Include(m => m.HotWater)
-                .Include(m => m.NaturalGas)
-                .Include(m => m.Steam)
-                .Include(m => m.CentralHeating)
                 .FirstOrDefault(m => m.Id == id);
 
             if (month == null)
@@ -122,6 +118,7 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // ADMIN: Details
         public IActionResult Details(int id)
         {
             var month = dbContext.Months

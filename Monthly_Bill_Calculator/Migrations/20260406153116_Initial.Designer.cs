@@ -12,8 +12,8 @@ using Monthly_Bill_Calculator.Data;
 namespace Monthly_Bill_Calculator.Migrations
 {
     [DbContext(typeof(CalcAppDbContext))]
-    [Migration("20260406122148_IntitialCreate")]
-    partial class IntitialCreate
+    [Migration("20260406153116_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
