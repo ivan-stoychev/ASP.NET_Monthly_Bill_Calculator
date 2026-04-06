@@ -20,6 +20,9 @@ namespace Monthly_Bill_Calculator.DB_Models
 
         public bool IsPaid { get; set; } = false;
 
+        public string UserId { get; set; }
+        public CalcAppUser User { get; set; }
+
         // Foreign keys
         public int? ElectricityId { get; set; }
         public int? ColdWaterId { get; set; }
