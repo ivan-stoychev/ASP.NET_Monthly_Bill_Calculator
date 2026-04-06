@@ -17,7 +17,6 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
             this.dbContext = dbContext;
         }
 
-        // ADMIN: View all bills
         public IActionResult Index()
         {
             var months = dbContext.Months
@@ -35,7 +34,6 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
             return View(months);
         }
 
-        // ADMIN: Create bill
         public IActionResult Create()
         {
             ViewBag.Users = dbContext.Users.ToList();
@@ -45,7 +43,6 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Month month)
         {
-            // Always create utility objects if missing
             month.Electricity ??= new Electricity();
             month.ColdWater ??= new ColdWater();
             month.HotWater ??= new HotWater();
@@ -53,7 +50,6 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
             month.Steam ??= new Steam();
             month.CentralHeating ??= new CentralHeating();
 
-            // Default
             month.IsPaid = false;
 
             dbContext.Months.Add(month);
@@ -62,7 +58,6 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // ADMIN: Edit bill
         public IActionResult Edit(int id)
         {
             var month = dbContext.Months
@@ -91,7 +86,6 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // ADMIN: Delete bill
         public IActionResult Delete(int id)
         {
             var month = dbContext.Months
@@ -118,7 +112,6 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // ADMIN: Details
         public IActionResult Details(int id)
         {
             var month = dbContext.Months

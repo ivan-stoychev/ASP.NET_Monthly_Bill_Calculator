@@ -1,4 +1,5 @@
 ﻿using Monthly_Bill_Calculator.Common;
+using Monthly_Bill_Calculator.DB_Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace Monthly_Bill_Calculator.Models
@@ -38,6 +39,5 @@ namespace Monthly_Bill_Calculator.Models
         public decimal TotalSpent { get; set; }
 
         public decimal TotalAverageSpent { get; set; }
-
     }
 }

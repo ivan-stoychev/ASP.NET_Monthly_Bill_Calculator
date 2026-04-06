@@ -15,6 +15,16 @@ namespace Monthly_Bill_Calculator.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "AdminMonth", new { area = "Admin" });
+                }
+
+                return RedirectToAction("Index", "Month");
+            }
+
             return RedirectToAction("Login", "Account", new { area = "Identity" });
         }
 

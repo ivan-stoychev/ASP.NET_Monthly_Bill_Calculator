@@ -13,13 +13,11 @@ namespace Monthly_Bill_Calculator
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-            // Register DbContext
             builder.Services.AddDbContext<CalcAppDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
             });
 
-            // Identity + Roles
             builder.Services.AddDefaultIdentity<CalcAppUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -27,22 +25,26 @@ namespace Monthly_Bill_Calculator
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<CalcAppDbContext>();
 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            });
+
             builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
 
             WebApplication app = builder.Build();
 
-            // Ensure DB exists + Seed Roles/Admin
             using (IServiceScope scope = app.Services.CreateScope())
             {
                 CalcAppDbContext db = scope.ServiceProvider.GetRequiredService<CalcAppDbContext>();
 
-                // Correct method for Identity + SQL Server
                 db.Database.Migrate();
 
                 await SeedAdminRole.SeedAsync(scope.ServiceProvider);
             }
 
-            // Pipeline
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -57,15 +59,12 @@ namespace Monthly_Bill_Calculator
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // Identity UI
             app.MapRazorPages();
 
-            // Area routing
             app.MapControllerRoute(
                 name: "areas",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-            // Default route
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -86,11 +86,11 @@ namespace Monthly_Bill_Calculator.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+
                     _logger.LogInformation("User logged in.");
 
                     var user = await _userManager.FindByEmailAsync(Input.Email);
 
-                    // ⭐ ROLE‑BASED REDIRECT
                     if (await _userManager.IsInRoleAsync(user, "Admin"))
                     {
                         return RedirectToAction("Index", "AdminMonth", new { area = "Admin" });
