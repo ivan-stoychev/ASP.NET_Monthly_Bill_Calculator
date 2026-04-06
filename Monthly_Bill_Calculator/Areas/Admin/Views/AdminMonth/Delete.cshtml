@@ -1,0 +1,38 @@
+﻿@model Monthly_Bill_Calculator.DB_Models.Month
+
+@{
+    ViewData["Title"] = "Delete Month";
+}
+
+<h2 class="mb-4 text-danger">Delete Month</h2>
+
+<div class="alert alert-warning">
+    <strong>Warning:</strong> You are about to permanently delete this month and all its utility data.
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h4 class="card-title">Month Summary</h4>
+        <p><strong>Year:</strong> @Model.Year</p>
+        <p><strong>Month:</strong> @Model.MonthNumber</p>
+        <p><strong>Total Cost:</strong> @Model.Total.ToString("0.00")</p>
+        <p>
+            <strong>Status:</strong>
+            @if (Model.IsPaid)
+            {
+                <span class="badge bg-success">Paid</span>
+            }
+            else
+            {
+                <span class="badge bg-warning text-dark">Unpaid</span>
+            }
+        </p>
+    </div>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+</form>
