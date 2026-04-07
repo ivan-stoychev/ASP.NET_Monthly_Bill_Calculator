@@ -106,6 +106,8 @@ bash
 dotnet run
 
 5. Default Admin User
+   UserName: superadmin@example.com
+   Password: SuperSecret!123
 
 The system seeds an admin role and admin user automatically.
 🧱 Project Structure
@@ -157,18 +159,3 @@ Custom 404 Page
 
 Displays a friendly message and guidance for login issues.
 Custom 500 Page
-
-(Recommended) Add a clean fallback for unexpected server errors.
-🔐 Security
-
-    ASP.NET Identity
-
-    Anti-forgery tokens
-
-    EF Core parameterized queries
-
-    Razor auto-encoding (prevents XSS)
-
-    Role-based authorization
-
-    No raw SQL
