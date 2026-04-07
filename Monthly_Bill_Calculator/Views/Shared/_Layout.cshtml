@@ -31,7 +31,6 @@
                     <!-- LEFT SIDE NAV -->
                     <ul class="navbar-nav flex-grow-1">
 
-                        <!-- Always visible -->
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -42,7 +41,6 @@
 
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <!-- USER MENU -->
                             @if (!User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
@@ -64,7 +62,6 @@
                                 </li>
                             }
 
-                            <!-- ADMIN MENU -->
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
@@ -91,16 +88,14 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark"
                                    asp-area="Identity"
-                                   asp-page="/Account/Login"
-                                   asp-route-returnUrl="/">
+                                   asp-page="/Account/Login">
                                     Login
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark"
                                    asp-area="Identity"
-                                   asp-page="/Account/Register"
-                                   asp-route-returnUrl="/">
+                                   asp-page="/Account/Register">
                                     Register
                                 </a>
                             </li>

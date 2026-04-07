@@ -25,7 +25,7 @@ namespace Monthly_Bill_Calculator.Controllers
                 return RedirectToAction("Index", "Month");
             }
 
-            return RedirectToAction("Login", "Account", new { area = "Identity" });
+            return View();
         }
 
         public IActionResult Privacy()
