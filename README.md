@@ -109,53 +109,6 @@ dotnet run
    UserName: superadmin@example.com
    Password: SuperSecret!123
 
-The system seeds an admin role and admin user automatically.
-🧱 Project Structure
-Code
-
-/Areas
-   /Admin
-      /Controllers
-      /Views
-/Controllers
-/Views
-/Models
-/Data
-   CalcAppDbContext.cs
-   SeedData
-
-🧩 Entity Models (5+)
-
-    Month
-
-    Electricity
-
-    ColdWater
-
-    HotWater
-
-    NaturalGas
-
-    Steam
-
-    CentralHeating
-
-    CalcAppUser (Identity user)
-
-🧭 Controllers (5+)
-
-    HomeController
-
-    MonthController
-
-    SummaryController
-
-    AdminMonthController (Admin Area)
-
-    ErrorController
-
 ⚠️ Error Handling
 Custom 404 Page
-
-Displays a friendly message and guidance for login issues.
 Custom 500 Page
