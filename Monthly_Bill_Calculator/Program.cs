@@ -53,6 +53,7 @@ namespace Monthly_Bill_Calculator
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
             app.UseRouting();
 
