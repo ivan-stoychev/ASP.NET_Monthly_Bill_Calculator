@@ -12,7 +12,7 @@ using Monthly_Bill_Calculator.Data;
 namespace Monthly_Bill_Calculator.Migrations
 {
     [DbContext(typeof(CalcAppDbContext))]
-    [Migration("20260406184838_Initial")]
+    [Migration("20260407102314_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

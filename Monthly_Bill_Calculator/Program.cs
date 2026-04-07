@@ -59,8 +59,6 @@ namespace Monthly_Bill_Calculator
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapRazorPages();
-
             app.MapControllerRoute(
                 name: "areas",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
@@ -68,6 +66,8 @@ namespace Monthly_Bill_Calculator
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapRazorPages();
 
             app.Run();
         }
