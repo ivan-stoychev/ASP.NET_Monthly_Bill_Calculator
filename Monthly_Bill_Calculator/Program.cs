@@ -47,7 +47,7 @@ namespace Monthly_Bill_Calculator
 
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error/500");
                 app.UseHsts();
             }
 

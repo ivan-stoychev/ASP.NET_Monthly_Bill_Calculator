@@ -14,5 +14,12 @@ namespace Monthly_Bill_Calculator.Controllers
 
             return View("Error");
         }
+
+        [Route("Error/500")]
+        public IActionResult ServerError()
+        {
+            return View("ServerError");
+        }
+
     }
 }
