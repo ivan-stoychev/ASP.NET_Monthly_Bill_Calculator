@@ -6,6 +6,47 @@
 
 <h2 class="mb-4">Manage Months</h2>
 
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <form asp-action="Index" method="get" class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Search Email</label>
+                <input type="text" name="searchEmail" value="@ViewData["CurrentEmail"]" class="form-control" placeholder="user@email.com..." />
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Year</label>
+                <input type="number" name="filterYear" value="@ViewData["CurrentYear"]" class="form-control" placeholder="2024" />
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Month</label>
+                <select name="filterMonth" class="form-select">
+                    <option value="">All</option>
+                    @for (int i = 1; i <= 12; i++)
+                    {
+                        <!option value="@i" @(ViewData["CurrentMonth"]?.ToString() == i.ToString() ? "selected" : "")>@i</!option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Status</label>
+                <select name="filterStatus" class="form-select">
+                    <!option value="">All Statuses</!option>
+                    <!option value="true" @(ViewData["CurrentStatus"]?.ToString() == "True" ? "selected" : "")>Paid</!option>
+                    <!option value="false" @(ViewData["CurrentStatus"]?.ToString() == "False" ? "selected" : "")>Unpaid</!option>
+                </select>
+            </div>
+
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100 me-1">Filter</button>
+                <a asp-action="Index" class="btn btn-outline-secondary w-100">Clear</a>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="mb-3">
     <a asp-action="Create" class="btn btn-primary">Create New Month</a>
 </div>
@@ -48,3 +89,22 @@
         }
     </tbody>
 </table>
+
+@if ((int)ViewData["TotalPages"] > 1)
+{
+    <nav>
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+            {
+                <li class="page-item @(i == (int)ViewData["CurrentPage"] ? "active" : "")">
+                    <a class="page-link" asp-action="Index"
+                       asp-route-page="@i"
+                       asp-route-searchEmail="@ViewData["CurrentEmail"]"
+                       asp-route-filterYear="@ViewData["CurrentYear"]"
+                       asp-route-filterMonth="@ViewData["CurrentMonth"]"
+                       asp-route-filterStatus="@ViewData["CurrentStatus"]">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

@@ -17,9 +17,11 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
             this.dbContext = dbContext;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchEmail, int? filterYear, int? filterMonth, bool? filterStatus, int page = 1)
         {
-            var months = dbContext.Months
+            int pageSize = 10;
+
+            var query = dbContext.Months
                 .Include(m => m.User)
                 .Include(m => m.Electricity)
                 .Include(m => m.ColdWater)
@@ -27,9 +29,37 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
                 .Include(m => m.NaturalGas)
                 .Include(m => m.Steam)
                 .Include(m => m.CentralHeating)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchEmail))
+                query = query.Where(m => m.User.Email.Contains(searchEmail));
+
+            if (filterYear.HasValue)
+                query = query.Where(m => m.Year == filterYear);
+
+            if (filterMonth.HasValue)
+                query = query.Where(m => m.MonthNumber == filterMonth);
+
+            if (filterStatus.HasValue)
+                query = query.Where(m => m.IsPaid == filterStatus.Value);
+
+            int totalItems = query.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            var months = query
                 .OrderByDescending(m => m.Year)
                 .ThenByDescending(m => m.MonthNumber)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToList();
+
+            ViewData["CurrentPage"] = page;
+            ViewData["TotalPages"] = totalPages;
+
+            ViewData["CurrentEmail"] = searchEmail;
+            ViewData["CurrentYear"] = filterYear;
+            ViewData["CurrentMonth"] = filterMonth;
+            ViewData["CurrentStatus"] = filterStatus;
 
             return View(months);
         }
@@ -41,6 +71,7 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Month month)
         {
             month.Electricity ??= new Electricity();
@@ -78,6 +109,7 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(Month month)
         {
             dbContext.Months.Update(month);
@@ -99,6 +131,7 @@ namespace Monthly_Bill_Calculator.Areas.Admin.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             var month = dbContext.Months.Find(id);

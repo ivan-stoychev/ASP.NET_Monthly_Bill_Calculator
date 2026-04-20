@@ -65,6 +65,12 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="AdminUserManagement" asp-action="Index">
+                                        Manage Users Roles
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="Admin" asp-controller="AdminMonth" asp-action="Index">
                                         All Bills
                                     </a>

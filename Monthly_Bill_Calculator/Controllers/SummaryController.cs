@@ -24,6 +24,7 @@ namespace Monthly_Bill_Calculator.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AverageUsage(SummaryViewModel model)
         {
             if (!ModelState.IsValid)
@@ -99,6 +100,7 @@ namespace Monthly_Bill_Calculator.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult TotalUsage(SummaryViewModel model)
         {
             if (!ModelState.IsValid)

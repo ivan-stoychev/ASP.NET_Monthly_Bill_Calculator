@@ -1,114 +1,72 @@
-📘 Monthly Bill Calculator
+# 📘 Monthly Bill Calculator
 
-A clean, modern ASP.NET Core MVC application for tracking monthly utility expenses.
-The system allows users to record, view, and manage monthly bills such as electricity, water, gas, heating, and more — with full authentication, role-based access, and a dedicated admin area.
-🚀 Features
-👤 Authentication & Authorization
+**Monthly Bill Calculator** е модерно ASP.NET Core MVC приложение, проектирано за прецизно проследяване и анализ на месечни битови разходи. Системата предлага пълно управление на комунални услуги с вградена ролева оторизация, административен панел и статистически справки.
 
-    ASP.NET Identity with User and Administrator roles
+---
 
-    Secure login, logout, and registration
+## 🚀 Ключови функционалности
 
-    Admin-only area for managing all users’ bills
+### 👤 Сигурност и Оторизация
+* **ASP.NET Core Identity:** Пълна интеграция за регистрация и вход, използваща персонализиран `CalcAppUser`.
+* **Role-based Access Control (RBAC):** Диференциран достъп за потребители (`User`) и администратори (`Admin`).
+* **User Management:** Специализиран интерфейс за администратори за управление на потребителски профили и роли.
 
-📅 Monthly Bill Management
+### 📅 Управление на разходите
+* **Детайлно проследяване:** Електричество, Студена/Топла вода, Газ, Пара и Централно парно.
+* **Smart Filtering:** Търсене по имейл и филтриране по година, месец и статус на плащане в реално време.
+* **Server-side Pagination:** Оптимизирано визуализиране на данните с по 10 записа на страница за по-добра производителност.
+* **Status Tracking:** Възможност за потребителите да маркират своите сметки като "Платени".
 
-    Add, view, and manage monthly utility entries
+### 📊 Анализи и Отчети
+* **Средно потребление:** Изчисляване на средни стойности на потребление и цена за избран период.
+* **Общо потребление:** Сумиране на всички разходи и количества по видове услуги.
+* **Safe UX:** Глобална защита срещу CSRF атаки и обработка на грешки при липсващи данни.
 
-    Track multiple utilities per month:
+---
 
-        Electricity
+## 🧪 Качество и Тестване
+Проектът включва автоматизирани **Unit Tests**, разработени с **NUnit**, покриващи:
+* Валидация на бизнес логиката в административните контролери.
+* Коректност на математическите агрегации в `SummaryController`.
+* Използване на **InMemory Database** за изолирано тестване на CRUD операциите.
 
-        Cold Water
+---
 
-        Hot Water
+## 🛠 Технологичен стек
+* **Framework:** .NET 8 (ASP.NET Core MVC)
+* **ORM:** Entity Framework Core
+* **Database:** SQL Server / LocalDB
+* **Frontend:** Bootstrap 5, Razor Views
+* **Testing:** NUnit, Microsoft.EntityFrameworkCore.InMemory
 
-        Natural Gas
+---
 
-        Steam
+## 📦 Инсталация и Стартиране
 
-        Central Heating
-
-    Automatic sorting by year and month
-
-    Mark months as paid/unpaid
-
-📊 Summary & Reporting
-
-    Average usage summary
-
-    Total usage summary
-
-    Clean, readable tables
-
-    Null-safe calculations
-
-🧭 Navigation & UI
-
-    Responsive Bootstrap 5 layout
-
-    Clean navigation menu with role-based visibility
-
-    Custom 404 error page
-
-    Custom 500 error page (optional)
-
-🗄 Database & Architecture
-
-    SQL Server database (auto-created on first run)
-
-    Entity Framework Core with migrations
-
-    Seeded admin role + admin user
-
-    MVC Areas (Admin area)
-
-    Dependency Injection everywhere
-
-🛠 Technologies Used
-
-    ASP.NET Core MVC (.NET 8)
-
-    Entity Framework Core
-
-    SQL Server / LocalDB
-
-    ASP.NET Identity
-
-    Bootstrap 5
-
-    C#
-
-    Razor Views
-    
-📦 Installation & Setup
-1. Clone the repository
-bash
-
+1. Клонирайте хранилището:
 git clone https://github.com/your-username/Monthly-Bill-Calculator.git
 
-2. Open the project
+2. Конфигурация:
+Проверете Connection String-а в appsettings.json. Базата данни се създава автоматично при първото стартиране.
 
-Use Visual Studio 2022 or JetBrains Rider.
-3. Configure the database
-
-The app uses the connection string in appsettings.json.
-On first run, EF Core will automatically create the database:
-Code
-
-MonthlyBillCalculator
-
-4. Run the application
-
-Press F5 or run via CLI:
-bash
-
+3. Стартиране:
+През Visual Studio (F5) или чрез терминала:
 dotnet run
 
-5. Default Admin User
-   UserName: superadmin@example.com
-   Password: SuperSecret!123
+4. Тестови данни (Seed):
+При първоначално стартиране системата автоматично генерира:
+* Admin User: superadmin@example.com / Password123!
+* Test Users: user1@example.com, user2@example.com
 
-⚠️ Error Handling
-Custom 404 Page
-Custom 500 Page
+---
+
+## 📂 Структура на проекта
+* Areas/Admin - Административни контроли, управление на роли и потребители.
+* Controllers - Основна бизнес логика за потребителите.
+* DB_Models - Дефиниции на субектите в базата данни.
+* Data - Контекст на базата данни и автоматизиран Seed.
+* Monthly_Bill_Calculator.Tests - Пълен набор от Unit тестове.
+
+---
+
+⚠️ Error Handling: Системата разполага с персонализирани страници за грешки 404 и 500, за да осигури професионален потребителски опит.

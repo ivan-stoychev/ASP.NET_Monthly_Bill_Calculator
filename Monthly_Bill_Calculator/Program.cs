@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Monthly_Bill_Calculator.Data;
-using Monthly_Bill_Calculator.DB_Models;
 using Monthly_Bill_Calculator.Data.SeedData;
+using Monthly_Bill_Calculator.DB_Models;
+using System.Globalization;
 
 namespace Monthly_Bill_Calculator
 {
@@ -31,10 +33,24 @@ namespace Monthly_Bill_Calculator
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new Microsoft.AspNetCore.Mvc.AutoValidateAntiforgeryTokenAttribute());
+            });
             builder.Services.AddRazorPages();
 
+            // Fix culture issues with decimal separator in different locales
+            var rootCulture = CultureInfo.InvariantCulture;
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(rootCulture),
+                SupportedCultures = new List<CultureInfo> { rootCulture },
+                SupportedUICultures = new List<CultureInfo> { rootCulture }
+            };
+
             WebApplication app = builder.Build();
+
+            app.UseRequestLocalization(localizationOptions);
 
             using (IServiceScope scope = app.Services.CreateScope())
             {
@@ -42,7 +58,9 @@ namespace Monthly_Bill_Calculator
 
                 db.Database.Migrate();
 
-                await SeedAdminRole.SeedAsync(scope.ServiceProvider);
+                await SeedUserRoles.SeedAsync(scope.ServiceProvider);
+                await SeedUsers.SeedAsync(scope.ServiceProvider);
+                await SeedUsersData.SeedAsync(scope.ServiceProvider);
             }
 
             if (!app.Environment.IsDevelopment())
